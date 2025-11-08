@@ -224,69 +224,24 @@ export default function Hero() {
               </p>
 
               {/* Payment & Trust Badges */}
-              <div className="flex flex-wrap items-center gap-4">
-                {/* Payment Icons */}
-                <div className="flex items-center gap-2 bg-gray-100 rounded-lg px-4 py-2">
-                  <div className="flex items-center gap-2">
-                    <div className="w-10 h-7 bg-white rounded flex items-center justify-center p-1">
-                      <img
-                        src="/images/VISA-logo.png"
-                        alt="Visa"
-                        className="w-full h-full object-contain"
-                      />
-                    </div>
-                    <div className="w-10 h-7 bg-white rounded flex items-center justify-center p-1">
-                      <img
-                        src="/images/MASTER-logo.png"
-                        alt="Mastercard"
-                        className="w-full h-full object-contain"
-                      />
-                    </div>
-                    <div className="w-10 h-7 bg-white rounded flex items-center justify-center p-1">
-                      <img
-                        src="/images/AMEX-logo.png"
-                        alt="American Express"
-                        className="w-full h-full object-contain"
-                      />
-                    </div>
-                    <div className="w-10 h-7 bg-white rounded flex items-center justify-center p-1">
-                      <img
-                        src="/images/PAYPAL-logo.png"
-                        alt="PayPal"
-                        className="w-full h-full object-contain"
-                      />
-                    </div>
-                  </div>
-                </div>
-
-                {/* Trust Badges */}
-                <div className="flex items-center gap-2">
-                  <div className="flex items-center gap-1 bg-gray-100 rounded-lg px-3 py-2">
-                    <Award className="w-4 h-4 text-[#D30B5F]" />
-                    <span className="text-xs text-gray-700 font-semibold">
-                      Award Winning
-                    </span>
-                  </div>
-                  <div className="flex items-center gap-1 bg-gray-100 rounded-lg px-3 py-2">
-                    <TrendingUp className="w-4 h-4 text-[#D30B5F]" />
-                    <span className="text-xs text-gray-700 font-semibold">
-                      Fast Growth
-                    </span>
-                  </div>
-                </div>
-              </div>
+              {/* ...removed payment and trust badges... */}
 
               {/* Trustpilot Rating */}
-              <div className="flex items-center gap-3 bg-gray-100 rounded-lg px-4 py-3 inline-flex">
-                <div className="bg-[#00B67A] px-2 py-1 rounded">
-                  <Star className="w-5 h-5 text-white fill-white" />
+              <div className="flex items-center gap-4 bg-white shadow-md rounded-xl px-5 py-3 border border-gray-200">
+                <div className="flex items-center justify-center h-12 w-28 bg-white rounded-lg border border-gray-100 shadow-sm mr-2">
+                  <img
+                    src="/images/Trustpilot-logo.png"
+                    alt="Trustpilot Logo"
+                    className="h-8 w-auto object-contain"
+                    style={{ maxWidth: "100%" }}
+                  />
                 </div>
-                <div>
-                  <div className="flex items-center gap-1">
-                    <span className="text-gray-900 font-bold text-lg">
+                <div className="flex flex-col justify-center">
+                  <div className="flex items-center gap-2 mb-1">
+                    <span className="text-[#003366] font-bold text-lg">
                       Excellent
                     </span>
-                    <div className="flex gap-1">
+                    <div className="flex gap-0.5">
                       {[...Array(5)].map((_, i) => (
                         <Star
                           key={i}
@@ -295,12 +250,12 @@ export default function Hero() {
                       ))}
                     </div>
                   </div>
-                  <p className="text-xs text-gray-600">
+                  <span className="text-xs text-gray-600 font-medium">
                     4.8 out of 5 based on 8,370 reviews
-                  </p>
+                  </span>
                 </div>
-                <span className="text-xs text-gray-700 font-semibold">
-                  Trustpilot
+                <span className="ml-4 px-2 py-1 bg-[#00B67A]/10 text-[#00B67A] text-xs font-semibold rounded">
+                  Verified by Trustpilot
                 </span>
               </div>
             </motion.div>
@@ -325,18 +280,7 @@ export default function Hero() {
               <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
 
               {/* Today's Stats Badge */}
-              <motion.div
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.6, delay: 0.8 }}
-                className="absolute top-8 right-8 bg-[#FFE66D] text-[#003366] rounded-2xl px-6 py-4 shadow-2xl"
-              >
-                <div className="text-center">
-                  <div className="text-xs font-semibold mb-1">Today</div>
-                  <div className="text-2xl font-bold">124</div>
-                  <div className="text-xs">COMPANIES FORMED</div>
-                </div>
-              </motion.div>
+              {/* ...removed Today's Stats Badge... */}
             </div>
           </motion.div>
         </div>

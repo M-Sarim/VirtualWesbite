@@ -3,6 +3,49 @@ import { Link, useLocation } from "react-router-dom";
 import { Menu, X, Phone, Mail, ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { AnimatePresence, motion } from "framer-motion";
+// Trustpilot badge styles
+const trustpilotStyles = {
+  container: {
+    display: "flex",
+    alignItems: "center",
+    gap: "1rem",
+    background: "rgba(255,255,255,0.95)",
+    borderRadius: "1.5rem",
+    boxShadow: "0 2px 12px rgba(0,0,0,0.07)",
+    padding: "0.75rem 1.5rem",
+    margin: "1.5rem 0",
+    maxWidth: "fit-content",
+  },
+  stars: {
+    color: "#00B67A",
+    fontSize: "1.5rem",
+    marginRight: "0.5rem",
+    letterSpacing: "0.1em",
+  },
+  score: {
+    fontWeight: 700,
+    fontSize: "1.1rem",
+    color: "#222",
+    marginRight: "0.5rem",
+  },
+  reviews: {
+    color: "#666",
+    fontSize: "1rem",
+    marginRight: "0.5rem",
+  },
+  trustpilot: {
+    display: "flex",
+    alignItems: "center",
+    gap: "0.3rem",
+    fontWeight: 500,
+    color: "#00B67A",
+    fontSize: "1rem",
+  },
+  tick: {
+    color: "#00B67A",
+    fontSize: "1.1rem",
+  },
+};
 
 export default function Header({
   showFlashSale = true,
@@ -38,6 +81,20 @@ export default function Header({
     } else {
       // On other pages (blog, about, etc.)
       setActiveSection(location.pathname);
+      {
+        /* Trustpilot Review Badge */
+      }
+      <div style={trustpilotStyles.container}>
+        <span style={trustpilotStyles.stars}>{"★★★★★"}</span>
+        <span style={trustpilotStyles.score}>Excellent</span>
+        <span style={trustpilotStyles.reviews}>
+          4.8 out of 5 based on 8,370 reviews
+        </span>
+        <span style={trustpilotStyles.trustpilot}>
+          <span style={trustpilotStyles.tick}>✔</span>
+          Verified by Trustpilot
+        </span>
+      </div>;
     }
   }, [location]);
 
@@ -146,8 +203,8 @@ export default function Header({
       {/* Flash Sale Banner */}
       {showFlashSale && (
         <div className="bg-gradient-to-r from-[#D30B5F] to-[#D40C60] text-white py-2.5 px-4 text-center text-base font-bold">
-          ⚡ "Flash Sale" Fall Into a Great Deal This Autumn! - 30% Discount for
-          New Clients, use code LEAF25 ⚡
+          ⚡ Special Offer: Enjoy exclusive discounts on our services for a
+          limited time! ⚡
         </div>
       )}
 
@@ -157,15 +214,18 @@ export default function Header({
           <div className="flex justify-between items-center h-20">
             {/* Logo */}
             <Link to="/" className="flex items-center gap-3 group">
-              <div className="w-12 h-12 bg-[#003366] rounded-lg flex items-center justify-center shadow-md hover:shadow-lg transition-shadow">
-                <span className="text-white font-bold text-xl">UK</span>
-              </div>
+              <img
+                src="/company-logo.png"
+                alt="Company Logo"
+                className="h-12 w-auto object-contain drop-shadow-sm"
+                style={{ maxWidth: 60 }}
+              />
               <div className="hidden sm:block">
                 <div
                   className="font-bold text-xl text-[#262626]"
                   style={{ fontFamily: "Poppins, sans-serif" }}
                 >
-                  UK BUSINESS PRO
+                  DARTS SECURITY
                 </div>
                 <div className="text-xs text-[#A3A8B0] uppercase tracking-wide">
                   A TEAM WITH OVER 100 YEARS EXPERIENCE

@@ -466,41 +466,7 @@ export default function Services() {
             </span>
           </div>
           <div className="flex justify-center items-center gap-3 flex-wrap">
-            {/* Visa */}
-            <div className="bg-white rounded-xl shadow-sm hover:shadow-md transition-all duration-300 p-3 w-20 h-14 flex items-center justify-center border border-gray-100 hover:border-[#D40E60] hover:-translate-y-0.5">
-              <img
-                src="/images/VISA-logo.png"
-                alt="Visa"
-                className="w-full h-full object-contain"
-              />
-            </div>
-
-            {/* Mastercard */}
-            <div className="bg-white rounded-xl shadow-sm hover:shadow-md transition-all duration-300 p-3 w-20 h-14 flex items-center justify-center border border-gray-100 hover:border-[#D40E60] hover:-translate-y-0.5">
-              <img
-                src="/images/MASTER-logo.png"
-                alt="Mastercard"
-                className="w-full h-full object-contain"
-              />
-            </div>
-
-            {/* Amex */}
-            <div className="bg-white rounded-xl shadow-sm hover:shadow-md transition-all duration-300 p-3 w-20 h-14 flex items-center justify-center border border-gray-100 hover:border-[#D40E60] hover:-translate-y-0.5">
-              <img
-                src="/images/AMEX-logo.png"
-                alt="American Express"
-                className="w-full h-full object-contain"
-              />
-            </div>
-
-            {/* PayPal */}
-            <div className="bg-white rounded-xl shadow-sm hover:shadow-md transition-all duration-300 p-3 w-20 h-14 flex items-center justify-center border border-gray-100 hover:border-[#D40E60] hover:-translate-y-0.5">
-              <img
-                src="/images/PAYPAL-logo.png"
-                alt="PayPal"
-                className="w-full h-full object-contain"
-              />
-            </div>
+            {/* ...removed payment option badges... */}
           </div>
         </motion.div>
 
