@@ -147,7 +147,7 @@ export const trackPhoneCall = (phoneNumber: string) => {
 // Form Submission Tracking
 export const trackFormSubmission = (
   formName: string,
-  data?: Record<string, any>
+  _data?: Record<string, any>
 ) => {
   event({
     action: "form_submit",
@@ -180,7 +180,7 @@ export const trackLinkClick = (linkUrl: string, linkText: string) => {
 };
 
 // Video Play Tracking
-export const trackVideoPlay = (videoTitle: string, videoUrl: string) => {
+export const trackVideoPlay = (videoTitle: string, _videoUrl: string) => {
   event({
     action: "video_play",
     category: "engagement",

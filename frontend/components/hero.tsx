@@ -1,9 +1,7 @@
-import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import {
   Search,
-  MapPin,
   Star,
   Award,
   TrendingUp,

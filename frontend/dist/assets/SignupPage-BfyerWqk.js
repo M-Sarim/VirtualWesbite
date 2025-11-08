@@ -1,0 +1,1 @@
+import{j as o}from"./ui-vendor-nDyQ6H19.js";import{A as r}from"./AuthPage-D6v71V5U.js";import"./react-vendor-Zgr-oVm6.js";import"./footer-C9XRIIkB.js";import"./index-CqgPpFeU.js";import"./phone-DIBZvivN.js";import"./animation-vendor-aGzRfAwR.js";function t(){return o.jsx(r,{initialMode:"register"})}export{t as default};

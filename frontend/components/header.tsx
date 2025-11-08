@@ -54,7 +54,6 @@ export default function Header({
 }) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const [activeSection, setActiveSection] = useState("");
   const [servicesDropdownOpen, setServicesDropdownOpen] = useState(false);
   const location = useLocation();
 
@@ -73,14 +72,11 @@ export default function Header({
     if (location.pathname === "/") {
       if (location.hash) {
         // If there's a hash, scroll to that section only on navigation, not on reload
-        setActiveSection(location.hash);
       } else {
         // No hash - we're at the home page root
-        setActiveSection("/");
       }
     } else {
       // On other pages (blog, about, etc.)
-      setActiveSection(location.pathname);
       {
         /* Trustpilot Review Badge */
       }
@@ -115,7 +111,6 @@ export default function Header({
         });
         // Clear the hash from URL
         window.history.pushState(null, "", "/");
-        setActiveSection("/");
       } else {
         const element = document.getElementById(hash);
         if (element) {
@@ -131,7 +126,6 @@ export default function Header({
           });
 
           window.history.pushState(null, "", `#${hash}`);
-          setActiveSection(`#${hash}`);
         }
       }
     }
@@ -345,7 +339,7 @@ export default function Header({
                 <Link
                   key={link.label}
                   to={link.to}
-                  onClick={() => setActiveSection(link.to)}
+                  onClick={() => {}}
                   className={`text-sm font-semibold transition-colors whitespace-nowrap hover:text-[#D30B5F] ${
                     isActive(link) ? "text-[#D30B5F]" : "text-black"
                   }`}
@@ -389,7 +383,6 @@ export default function Header({
                     key={link.label}
                     to={link.to}
                     onClick={() => {
-                      setActiveSection(link.to);
                       setMobileMenuOpen(false);
                     }}
                     className={`text-base font-semibold py-2 transition-colors hover:text-[#D30B5F] ${
