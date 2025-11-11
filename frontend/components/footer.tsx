@@ -156,7 +156,7 @@ export default function Footer() {
         <div className="border-t border-white/10 pt-8">
           <div className="flex flex-col sm:flex-row justify-between items-center gap-4 text-sm text-gray-400">
             <p>&copy; 2025 UK Business Pro. All rights reserved.</p>
-            <div className="flex gap-6">
+            <div className="flex gap-6 items-center">
               <Link to="/" className="hover:text-[#D30B5F] transition-colors">
                 Privacy
               </Link>
@@ -169,6 +169,14 @@ export default function Footer() {
               >
                 Support
               </Link>
+              <button
+                onClick={() =>
+                  window.dispatchEvent(new Event("openCookieSettings"))
+                }
+                className="text-sm text-gray-300 hover:text-[#D30B5F] transition-colors"
+              >
+                Manage Cookie Settings
+              </button>
             </div>
           </div>
         </div>

@@ -209,9 +209,9 @@ export default function Header({
             {/* Logo */}
             <Link to="/" className="flex items-center gap-3 group">
               <img
-                src="/company-logo.png"
+                src="/images/company-logo.png"
                 alt="Company Logo"
-                className="h-12 w-auto object-contain drop-shadow-sm"
+                className="h-12 w-auto object-contain drop-shadow-sm bg-white rounded border border-gray-200"
                 style={{ maxWidth: 60 }}
               />
               <div className="hidden sm:block">

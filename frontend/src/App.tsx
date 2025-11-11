@@ -3,7 +3,6 @@ import { Routes, Route } from "react-router-dom";
 import { Toaster } from "@/components/ui/sonner";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { Loading } from "@/components/Loading";
-import { CookieConsent } from "@/components/cookie-consent";
 import { usePageTracking, useScrollTracking } from "@/lib/hooks/useAnalytics";
 
 // Lazy load pages for better performance
@@ -32,7 +31,6 @@ function App() {
         </Routes>
       </Suspense>
       <Toaster position="top-right" richColors />
-      <CookieConsent />
     </ErrorBoundary>
   );
 }

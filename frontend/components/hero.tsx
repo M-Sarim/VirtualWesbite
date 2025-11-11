@@ -133,12 +133,15 @@ export default function Hero() {
 
               <Button
                 size="lg"
-                className="rounded-full bg-[#D40E60] hover:bg-[#404040] text-white px-8 py-6 font-semibold shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
+                className="rounded-full bg-[#D40E60] hover:bg-[#D40E60] text-white w-12 h-12 p-0 flex items-center justify-center shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
                 onClick={handleSearch}
+                aria-label="Search"
+                aria-busy={isSearching}
                 disabled={isSearching}
               >
-                <Search className="w-5 h-5 mr-2" />
-                {isSearching ? "Searching..." : "Search"}
+                {/* Icon-only button for visual users; keep hidden text for screen readers */}
+                <Search className="w-5 h-5" />
+                <span className="sr-only">Search</span>
               </Button>
             </motion.div>
 
@@ -220,42 +223,6 @@ export default function Hero() {
                 partners. Choose a product banking partner during the process.
                 Get up to £75K Cash Back.
               </p>
-
-              {/* Payment & Trust Badges */}
-              {/* ...removed payment and trust badges... */}
-
-              {/* Trustpilot Rating */}
-              <div className="flex items-center gap-4 bg-white shadow-md rounded-xl px-5 py-3 border border-gray-200">
-                <div className="flex items-center justify-center h-12 w-28 bg-white rounded-lg border border-gray-100 shadow-sm mr-2">
-                  <img
-                    src="/images/Trustpilot-logo.png"
-                    alt="Trustpilot Logo"
-                    className="h-8 w-auto object-contain"
-                    style={{ maxWidth: "100%" }}
-                  />
-                </div>
-                <div className="flex flex-col justify-center">
-                  <div className="flex items-center gap-2 mb-1">
-                    <span className="text-[#003366] font-bold text-lg">
-                      Excellent
-                    </span>
-                    <div className="flex gap-0.5">
-                      {[...Array(5)].map((_, i) => (
-                        <Star
-                          key={i}
-                          className="w-4 h-4 text-[#00B67A] fill-[#00B67A]"
-                        />
-                      ))}
-                    </div>
-                  </div>
-                  <span className="text-xs text-gray-600 font-medium">
-                    4.8 out of 5 based on 8,370 reviews
-                  </span>
-                </div>
-                <span className="ml-4 px-2 py-1 bg-[#00B67A]/10 text-[#00B67A] text-xs font-semibold rounded">
-                  Verified by Trustpilot
-                </span>
-              </div>
             </motion.div>
           </motion.div>
 

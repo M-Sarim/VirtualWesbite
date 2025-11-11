@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { X, ChevronRight, Cookie } from "lucide-react";
 
@@ -16,14 +16,137 @@ export function CookieConsent() {
     uncategorized: false,
   });
 
+  const [language, setLanguage] = useState("en");
+  const [cookieToggles, setCookieToggles] = useState<Record<string, boolean>>({
+    __lc_cid: false,
+    _ga: false,
+    _fbp: false,
+  });
+  const modalRef = useRef<HTMLDivElement | null>(null);
+  const [modalTop, setModalTop] = useState<number>(0);
+
+  const translations: Record<string, Record<string, string>> = {
+    en: {
+      banner_message: "We use cookies to improve your experience.",
+      customize: "Customize Preferences",
+      accept_all: "Accept All",
+      reject_all: "Reject All",
+      save_preferences: "Save My Preferences",
+      manage_settings: "Manage Cookie Settings",
+      modal_title: "Customize Consent Preferences",
+      delete_data: "Delete My Data",
+    },
+    es: {
+      banner_message: "Usamos cookies para mejorar su experiencia.",
+      customize: "Personalizar preferencias",
+      accept_all: "Aceptar todo",
+      reject_all: "Rechazar todo",
+      save_preferences: "Guardar mis preferencias",
+      manage_settings: "Gestionar cookies",
+      modal_title: "Personalizar preferencias de consentimiento",
+      delete_data: "Eliminar mis datos",
+    },
+    fr: {
+      banner_message:
+        "Nous utilisons des cookies pour améliorer votre expérience.",
+      customize: "Personnaliser les préférences",
+      accept_all: "Tout accepter",
+      reject_all: "Tout refuser",
+      save_preferences: "Enregistrer mes préférences",
+      manage_settings: "Gérer les cookies",
+      modal_title: "Personnaliser les préférences de consentement",
+      delete_data: "Supprimer mes données",
+    },
+  };
+
+  const t = (key: string) =>
+    translations[language]?.[key] || translations.en[key] || key;
+
   useEffect(() => {
     // Check if user has already accepted cookies
     const consent = localStorage.getItem("cookie-consent");
+    // detect language
+    try {
+      const lang = navigator.language?.split("-")[0];
+      if (lang && translations[lang]) setLanguage(lang);
+    } catch {}
+
+    // Respect Do Not Track preference
+    try {
+      const dnt =
+        // @ts-ignore
+        navigator.doNotTrack ||
+        (window as any).doNotTrack ||
+        (navigator as any).msDoNotTrack;
+      if (dnt === "1" || dnt === "yes") {
+        // If DNT is enabled, automatically decline tracking cookies
+        const minimalPreferences = {
+          necessary: true,
+          functional: false,
+          analytics: false,
+          performance: false,
+          advertisement: false,
+          uncategorized: false,
+        };
+        localStorage.setItem("cookie-consent", "declined-dnt");
+        localStorage.setItem(
+          "cookie-preferences",
+          JSON.stringify(minimalPreferences)
+        );
+        localStorage.setItem("cookie-consent-date", new Date().toISOString());
+        setPreferences(minimalPreferences);
+        setShowBanner(false);
+        logConsent("declined-dnt", minimalPreferences);
+        return;
+      }
+    } catch (e) {
+      // ignore
+    }
+
     if (!consent) {
       // Show banner after a short delay
       setTimeout(() => setShowBanner(true), 1000);
+    } else {
+      // If there are stored preferences, load them
+      const stored = localStorage.getItem("cookie-preferences");
+      if (stored) {
+        try {
+          setPreferences(JSON.parse(stored));
+        } catch {}
+      }
+      const details = localStorage.getItem("cookie-details");
+      if (details) {
+        try {
+          setCookieToggles(JSON.parse(details));
+        } catch {}
+      }
     }
+
+    // Listen for external requests to open cookie settings (e.g., from footer)
+    const openHandler = () => {
+      openCustomize();
+    };
+    window.addEventListener("openCookieSettings", openHandler as EventListener);
+    return () => {
+      window.removeEventListener(
+        "openCookieSettings",
+        openHandler as EventListener
+      );
+    };
   }, []);
+
+  // Consent logging for audit/compliance
+  const logConsent = (action: string, prefs: any = preferences) => {
+    try {
+      const key = "cookie-consent-log";
+      const raw = localStorage.getItem(key);
+      const log = raw ? JSON.parse(raw) : [];
+      log.push({ action, preferences: prefs, date: new Date().toISOString() });
+      localStorage.setItem(key, JSON.stringify(log));
+    } catch (e) {
+      // ignore
+    }
+  };
 
   const acceptAll = () => {
     const allPreferences = {
@@ -46,6 +169,8 @@ export function CookieConsent() {
       (header as HTMLElement).style.display = "";
     }
     enableTracking();
+    logConsent("accepted", allPreferences);
+    setCookieToggles({ __lc_cid: true, _ga: true, _fbp: true });
   };
 
   const rejectAll = () => {
@@ -72,6 +197,8 @@ export function CookieConsent() {
       (header as HTMLElement).style.display = "";
     }
     disableTracking();
+    logConsent("declined", minimalPreferences);
+    setCookieToggles({ __lc_cid: false, _ga: false, _fbp: false });
   };
 
   const savePreferences = () => {
@@ -95,6 +222,11 @@ export function CookieConsent() {
     } else {
       disableTracking();
     }
+    // Persist detailed per-cookie settings as well
+    try {
+      localStorage.setItem("cookie-details", JSON.stringify(cookieToggles));
+    } catch {}
+    logConsent("custom", { preferences, details: cookieToggles });
   };
 
   const togglePreference = (key: keyof typeof preferences) => {
@@ -119,8 +251,17 @@ export function CookieConsent() {
     document.body.style.overflow = "hidden";
     const header = document.querySelector("header");
     if (header) {
-      (header as HTMLElement).style.display = "none";
+      // keep header visible — header is fixed with a higher z-index
+      // compute header height so modal can be positioned below it
+      try {
+        const rect = (header as HTMLElement).getBoundingClientRect();
+        setModalTop(rect.height + 12); // 12px gap below header
+      } catch (e) {}
     }
+    // set initial focus to modal for accessibility
+    setTimeout(() => {
+      modalRef.current?.focus();
+    }, 50);
   };
 
   const closeModal = () => {
@@ -129,7 +270,7 @@ export function CookieConsent() {
     document.body.style.overflow = "";
     const header = document.querySelector("header");
     if (header) {
-      (header as HTMLElement).style.display = "";
+      // header stays visible; no display toggling needed
     }
   };
 
@@ -158,6 +299,57 @@ export function CookieConsent() {
     console.log("Tracking disabled");
   };
 
+  // Keyboard accessibility: close on Escape and trap focus when modal open
+  useEffect(() => {
+    if (!showModal) return;
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        closeModal();
+      }
+      if (e.key === "Tab") {
+        // basic focus trap
+        const modal = modalRef.current;
+        if (!modal) return;
+        const focusable = modal.querySelectorAll<HTMLElement>(
+          'a[href], button:not([disabled]), textarea, input, select, [tabindex]:not([tabindex="-1"])'
+        );
+        if (focusable.length === 0) return;
+        const first = focusable[0];
+        const last = focusable[focusable.length - 1];
+        if (e.shiftKey && document.activeElement === first) {
+          e.preventDefault();
+          last.focus();
+        } else if (!e.shiftKey && document.activeElement === last) {
+          e.preventDefault();
+          first.focus();
+        }
+      }
+    };
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+  }, [showModal]);
+
+  const deleteData = () => {
+    localStorage.removeItem("cookie-consent");
+    localStorage.removeItem("cookie-preferences");
+    localStorage.removeItem("cookie-consent-date");
+    localStorage.removeItem("cookie-consent-log");
+    setPreferences({
+      necessary: true,
+      functional: false,
+      analytics: false,
+      performance: false,
+      advertisement: false,
+      uncategorized: false,
+    });
+    disableTracking();
+    alert("Your cookie preferences and logs have been removed.");
+  };
+
+  const toggleCookieToggle = (name: string) => {
+    setCookieToggles((prev) => ({ ...prev, [name]: !prev[name] }));
+  };
+
   return (
     <>
       {/* Initial Banner (only on first visit) */}
@@ -173,19 +365,20 @@ export function CookieConsent() {
               <X className="h-4 w-4" />
             </button>
 
-            <div className="text-sm text-gray-700 mb-3 pr-4">
-              <p>
-                We use cookies to help you navigate efficiently and perform
-                certain functions. You will find detailed information about all
-                cookies under each consent category below.
-              </p>
+            <div className="flex items-start gap-3 mb-3 pr-4">
+              <div className="flex-shrink-0 mt-0.5">
+                <Cookie className="w-6 h-6 text-[#D40E60]" />
+              </div>
+              <div className="text-sm text-gray-700 flex-1">
+                <p className="font-medium">{t("banner_message")}</p>
+              </div>
             </div>
 
             <button
               onClick={openCustomize}
               className="text-sm text-blue-600 hover:underline mb-3 block"
             >
-              Customize Consent Preferences
+              {t("customize")}
             </button>
 
             <div className="flex gap-2">
@@ -195,14 +388,14 @@ export function CookieConsent() {
                 onClick={rejectAll}
                 className="flex-1 text-xs border-blue-600 text-blue-600 hover:bg-blue-50"
               >
-                Reject All
+                {t("reject_all")}
               </Button>
               <Button
                 size="sm"
                 onClick={acceptAll}
                 className="flex-1 text-xs bg-blue-600 hover:bg-blue-700 text-white"
               >
-                Accept All
+                {t("accept_all")}
               </Button>
             </div>
 
@@ -223,37 +416,68 @@ export function CookieConsent() {
       )}
 
       {/* Revisit Consent Button (always visible on all pages) */}
-      {!showModal && (
+      <div className="fixed bottom-4 left-4 z-[110] group flex items-center">
         <button
-          onClick={openCustomize}
-          className="fixed bottom-4 left-4 z-50 w-14 h-14 bg-gradient-to-br from-[#D30B5F] to-[#FF1F7A] rounded-full shadow-lg hover:shadow-xl hover:scale-110 transition-all duration-300 flex items-center justify-center group"
-          aria-label="Revisit cookie consent"
+          onClick={() => {
+            if (showModal) {
+              closeModal();
+            } else {
+              openCustomize();
+            }
+          }}
+          className={`w-14 h-14 rounded-full shadow-lg hover:shadow-xl hover:scale-110 transition-all duration-300 flex items-center justify-center ${
+            showModal
+              ? "bg-[#D30B5F]"
+              : "bg-gradient-to-br from-[#D30B5F] to-[#FF1F7A]"
+          }`}
+          aria-label={
+            showModal ? "Close cookie preferences" : "Manage cookie settings"
+          }
         >
-          <Cookie className="w-7 h-7 text-white group-hover:rotate-12 transition-transform" />
+          {showModal ? (
+            <X className="w-7 h-7 text-white transition-transform" />
+          ) : (
+            <Cookie className="w-7 h-7 text-white transition-transform" />
+          )}
         </button>
-      )}
+        <span
+          className="absolute left-full ml-3 px-4 py-2 bg-gray-900 text-white text-xs rounded-lg shadow-lg whitespace-nowrap select-none opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto transition-opacity duration-200"
+          style={{ top: "50%", transform: "translateY(-50%)" }}
+        >
+          Manage Cookie Settings
+        </span>
+      </div>
 
       {/* Customization Modal */}
       {showModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4 animate-in fade-in duration-300">
-          <div className="bg-white shadow-2xl w-full max-w-4xl max-h-[90vh] overflow-hidden animate-in slide-in-from-bottom duration-500">
+        <div
+          onMouseDown={(e) => {
+            // Close when clicking outside the modal (overlay)
+            if (e.target === e.currentTarget) closeModal();
+          }}
+          className="fixed inset-0 z-50 flex items-start justify-center bg-black/50 backdrop-blur-sm p-2 sm:p-6 animate-in fade-in duration-300"
+        >
+          <div
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="cookie-modal-title"
+            ref={modalRef}
+            tabIndex={-1}
+            style={{ marginTop: Math.max(0, modalTop - 40) }}
+            className="bg-white shadow-2xl w-full max-w-4xl max-h-[90vh] overflow-hidden animate-in slide-in-from-bottom duration-500 border border-gray-200 rounded-none"
+          >
             {/* Header */}
-            <div className="flex items-center justify-between p-5 border-b border-gray-200">
-              <h2 className="text-lg font-semibold text-gray-900">
-                Customize Consent Preferences
-              </h2>
-              <button
-                onClick={closeModal}
-                className="text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-full p-1.5 transition-all"
-                aria-label="Close"
-                title="Close"
+            <div className="flex items-center justify-between p-4 sm:p-6 border-b border-gray-200">
+              <h2
+                id="cookie-modal-title"
+                className="text-lg sm:text-xl font-semibold text-gray-900"
               >
-                <X className="h-5 w-5" />
-              </button>
+                {t("modal_title")}
+              </h2>
             </div>
 
             {/* Content */}
-            <div className="p-5 overflow-y-auto max-h-[calc(90vh-180px)]">
+            <div className="p-4 sm:p-6 overflow-y-auto max-h-[calc(90vh-140px)]">
               <p className="text-sm text-gray-700 mb-2">
                 We use cookies to help you navigate efficiently and perform
                 certain functions. You will find detailed information about all
@@ -382,6 +606,28 @@ export function CookieConsent() {
                         </tbody>
                       </table>
                     </div>
+                    {/* Per-cookie controls (granular) */}
+                    <div className="mt-3 bg-white p-3 border border-gray-100 rounded">
+                      <div className="flex items-center justify-between text-sm text-gray-700 py-2">
+                        <div>
+                          <div className="font-semibold">__lc_cid</div>
+                          <div className="text-xs text-gray-500">
+                            Essential for live chat — expires in 1 year
+                          </div>
+                        </div>
+                        <div>
+                          <label className="relative inline-flex items-center cursor-pointer">
+                            <input
+                              type="checkbox"
+                              checked={cookieToggles.__lc_cid}
+                              onChange={() => toggleCookieToggle("__lc_cid")}
+                              className="sr-only peer"
+                            />
+                            <div className="w-11 h-6 bg-gray-200 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#4C82E4]"></div>
+                          </label>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 )}
               </div>
@@ -449,6 +695,27 @@ export function CookieConsent() {
                           </tr>
                         </tbody>
                       </table>
+                    </div>
+                    <div className="mt-3 bg-white p-3 border border-gray-100 rounded">
+                      <div className="flex items-center justify-between text-sm text-gray-700 py-2">
+                        <div>
+                          <div className="font-semibold">_ga</div>
+                          <div className="text-xs text-gray-500">
+                            Analytics cookie — expires after 30 days
+                          </div>
+                        </div>
+                        <div>
+                          <label className="relative inline-flex items-center cursor-pointer">
+                            <input
+                              type="checkbox"
+                              checked={cookieToggles._ga}
+                              onChange={() => toggleCookieToggle("_ga")}
+                              className="sr-only peer"
+                            />
+                            <div className="w-11 h-6 bg-gray-200 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#4C82E4]"></div>
+                          </label>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 )}
@@ -527,39 +794,62 @@ export function CookieConsent() {
                   </label>
                 </button>
                 {expandedCategories.includes("advertisement") && (
-                  <div className="px-4 py-3 text-sm text-gray-600 bg-white border-t border-gray-200">
-                    <p className="mb-3">
-                      Advertisement cookies are used to provide visitors with
-                      customized advertisements based on the pages you visited
-                      previously and to analyze the effectiveness of the ad
-                      campaigns.
-                    </p>
-                    <div className="bg-gray-50 p-4">
-                      <table className="w-full text-sm">
-                        <tbody>
-                          <tr className="border-b border-gray-200">
-                            <td className="py-2 font-semibold">Cookie</td>
-                            <td className="py-2">_fbp</td>
-                          </tr>
-                          <tr className="border-b border-gray-200">
-                            <td className="py-2 font-semibold">Duration</td>
-                            <td className="py-2">3 months</td>
-                          </tr>
-                          <tr>
-                            <td className="py-2 font-semibold align-top">
-                              Description
-                            </td>
-                            <td className="py-2">
-                              Facebook sets this cookie to display
-                              advertisements when either on Facebook or on a
-                              digital platform powered by Facebook advertising
-                              after visiting the website.
-                            </td>
-                          </tr>
-                        </tbody>
-                      </table>
+                  <>
+                    <div className="px-4 py-3 text-sm text-gray-600 bg-white border-t border-gray-200">
+                      <p className="mb-3">
+                        Advertisement cookies are used to provide visitors with
+                        customized advertisements based on the pages you visited
+                        previously and to analyze the effectiveness of the ad
+                        campaigns.
+                      </p>
+                      <div className="bg-gray-50 p-4">
+                        <table className="w-full text-sm">
+                          <tbody>
+                            <tr className="border-b border-gray-200">
+                              <td className="py-2 font-semibold">Cookie</td>
+                              <td className="py-2">_fbp</td>
+                            </tr>
+                            <tr className="border-b border-gray-200">
+                              <td className="py-2 font-semibold">Duration</td>
+                              <td className="py-2">3 months</td>
+                            </tr>
+                            <tr>
+                              <td className="py-2 font-semibold align-top">
+                                Description
+                              </td>
+                              <td className="py-2">
+                                Facebook sets this cookie to display
+                                advertisements when either on Facebook or on a
+                                digital platform powered by Facebook advertising
+                                after visiting the website.
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
                     </div>
-                  </div>
+                    <div className="mt-3 bg-white p-3 border border-gray-100 rounded">
+                      <div className="flex items-center justify-between text-sm text-gray-700 py-2">
+                        <div>
+                          <div className="font-semibold">_fbp</div>
+                          <div className="text-xs text-gray-500">
+                            Ad cookie — expires after 90 days
+                          </div>
+                        </div>
+                        <div>
+                          <label className="relative inline-flex items-center cursor-pointer">
+                            <input
+                              type="checkbox"
+                              checked={cookieToggles._fbp}
+                              onChange={() => toggleCookieToggle("_fbp")}
+                              className="sr-only peer"
+                            />
+                            <div className="w-11 h-6 bg-gray-200 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#4C82E4]"></div>
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                  </>
                 )}
               </div>
 
@@ -617,25 +907,33 @@ export function CookieConsent() {
                     onClick={rejectAll}
                     className="flex-1 rounded-none border-2 border-[#4C82E4] text-[#4C82E4] hover:bg-[#4C82E4] hover:text-white hover:border-[#4C82E4] text-base font-medium transition-all duration-200 py-6"
                   >
-                    Reject All
+                    {t("reject_all")}
                   </Button>
                   <Button
                     variant="outline"
                     onClick={savePreferences}
                     className="flex-1 rounded-none border-2 border-[#4C82E4] text-[#4C82E4] hover:bg-[#4C82E4] hover:text-white hover:border-[#4C82E4] text-base font-medium transition-all duration-200 py-6"
                   >
-                    Save My Preferences
+                    {t("save_preferences")}
                   </Button>
                   <Button
                     onClick={acceptAll}
                     className="flex-1 rounded-none bg-[#4C82E4] hover:bg-[#3D6BBE] text-white text-base font-medium transition-all duration-200 py-6"
                   >
-                    Accept All
+                    {t("accept_all")}
                   </Button>
                 </div>
-
-                {/* Powered by CookieYes - Right aligned */}
-                <div className="flex justify-end">
+                {/* Footer row: delete data (left) + Powered by (right) */}
+                <div className="flex justify-between items-center">
+                  <div>
+                    <Button
+                      variant="ghost"
+                      onClick={deleteData}
+                      className="text-xs text-gray-600 hover:text-red-600"
+                    >
+                      {t("delete_data")}
+                    </Button>
+                  </div>
                   <div className="text-xs text-gray-600 flex items-center gap-1">
                     <span>Powered by</span>
                     <a

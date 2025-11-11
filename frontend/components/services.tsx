@@ -460,13 +460,35 @@ export default function Services() {
           transition={{ duration: 0.6, delay: 0.3 }}
           className="mt-12 mb-6"
         >
-          <div className="text-center mb-6">
-            <span className="text-sm font-semibold text-gray-600 tracking-wide">
+          <div className="payment-options-enhanced">
+            <h2 className="text-2xl md:text-3xl font-semibold text-center mb-8 text-gray-700">
               Payment Options
-            </span>
-          </div>
-          <div className="flex justify-center items-center gap-3 flex-wrap">
-            {/* ...removed payment option badges... */}
+            </h2>
+            <div className="flex flex-wrap justify-center items-center gap-12 md:gap-20 mb-8">
+              <img
+                src="/images/AMEX-logo.png"
+                alt="AMEX"
+                className="h-10 md:h-14 w-auto"
+              />
+              <img
+                src="/images/VISA-logo.png"
+                alt="VISA"
+                className="h-10 md:h-14 w-auto"
+              />
+              <img
+                src="/images/PAYPAL-logo.png"
+                alt="PayPal"
+                className="h-10 md:h-14 w-auto"
+              />
+              <img
+                src="/images/MASTER-logo.png"
+                alt="Mastercard"
+                className="h-10 md:h-14 w-auto"
+              />
+            </div>
+            <p className="text-center text-lg md:text-xl text-gray-500 font-medium">
+              All prices are excluding VAT
+            </p>
           </div>
         </motion.div>
 
