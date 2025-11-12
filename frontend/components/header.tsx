@@ -8,30 +8,33 @@ const trustpilotStyles = {
   container: {
     display: "flex",
     alignItems: "center",
-    gap: "1rem",
+    gap: "0.5rem",
     background: "rgba(255,255,255,0.95)",
     borderRadius: "1.5rem",
     boxShadow: "0 2px 12px rgba(0,0,0,0.07)",
-    padding: "0.75rem 1.5rem",
-    margin: "1.5rem 0",
-    maxWidth: "fit-content",
+    padding: "0.5rem 1rem",
+    margin: "1rem 0",
+    maxWidth: "100%",
+    width: "100%",
+    flexWrap: "wrap" as const,
+    justifyContent: "center" as const,
   },
   stars: {
     color: "#00B67A",
-    fontSize: "1.5rem",
-    marginRight: "0.5rem",
+    fontSize: "clamp(1rem, 2vw, 1.5rem)",
+    marginRight: "0.25rem",
     letterSpacing: "0.1em",
   },
   score: {
     fontWeight: 700,
-    fontSize: "1.1rem",
+    fontSize: "clamp(0.9rem, 1.5vw, 1.1rem)",
     color: "#222",
-    marginRight: "0.5rem",
+    marginRight: "0.25rem",
   },
   reviews: {
     color: "#666",
-    fontSize: "1rem",
-    marginRight: "0.5rem",
+    fontSize: "clamp(0.75rem, 1.2vw, 1rem)",
+    marginRight: "0.25rem",
   },
   trustpilot: {
     display: "flex",
@@ -39,11 +42,11 @@ const trustpilotStyles = {
     gap: "0.3rem",
     fontWeight: 500,
     color: "#00B67A",
-    fontSize: "1rem",
+    fontSize: "clamp(0.75rem, 1.2vw, 1rem)",
   },
   tick: {
     color: "#00B67A",
-    fontSize: "1.1rem",
+    fontSize: "clamp(0.9rem, 1.5vw, 1.1rem)",
   },
 };
 
@@ -196,47 +199,52 @@ export default function Header({
     >
       {/* Flash Sale Banner */}
       {showFlashSale && (
-        <div className="bg-gradient-to-r from-[#D30B5F] to-[#D40C60] text-white py-2.5 px-4 text-center text-base font-bold">
-          ⚡ Special Offer: Enjoy exclusive discounts on our services for a
-          limited time! ⚡
+        <div className="bg-gradient-to-r from-[#D30B5F] to-[#D40C60] text-white py-2.5 px-4 text-center text-sm sm:text-base font-bold overflow-hidden">
+          <span className="inline-block">
+            Special Offer: Enjoy exclusive discounts on our services for a
+            limited time!
+          </span>
         </div>
       )}
 
       {/* Main Header */}
       <div className="border-b border-[#E0E0E0]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-20">
+          <div className="flex justify-between items-center h-16 sm:h-20">
             {/* Logo */}
-            <Link to="/" className="flex items-center gap-3 group">
+            <Link
+              to="/"
+              className="flex items-center gap-2 sm:gap-3 group flex-shrink-0"
+            >
               <img
-                src="/images/company-logo.png"
+                src="/src/images/company-logo.png"
                 alt="Company Logo"
-                className="h-12 w-auto object-contain drop-shadow-sm bg-white rounded border border-gray-200"
-                style={{ maxWidth: 60 }}
+                className="h-10 sm:h-12 w-auto object-contain drop-shadow-sm bg-white rounded border border-gray-200"
+                style={{ maxWidth: "50px" }}
               />
               <div className="hidden sm:block">
                 <div
-                  className="font-bold text-xl text-[#262626]"
+                  className="font-bold text-base sm:text-xl text-[#262626]"
                   style={{ fontFamily: "Poppins, sans-serif" }}
                 >
                   DARTS SECURITY
                 </div>
-                <div className="text-xs text-[#A3A8B0] uppercase tracking-wide">
+                <div className="text-[10px] sm:text-xs text-[#A3A8B0] uppercase tracking-wide">
                   A TEAM WITH OVER 100 YEARS EXPERIENCE
                 </div>
               </div>
             </Link>
 
             {/* Right Side - Contact & Buttons */}
-            <div className="hidden lg:flex items-center gap-6">
+            <div className="hidden lg:flex items-center gap-4 xl:gap-6">
               {/* Phone */}
               <div className="flex items-center gap-2">
-                <Phone className="w-4 h-4 text-[#D30B5F]" />
+                <Phone className="w-4 h-4 text-[#D30B5F] flex-shrink-0" />
                 <div className="text-left">
                   <div className="text-xs text-[#A3A8B0]">Call our team</div>
                   <a
                     href="tel:+442080389961"
-                    className="text-[#262626] font-bold text-base hover:text-[#D30B5F] transition-colors"
+                    className="text-[#262626] font-bold text-sm xl:text-base hover:text-[#D30B5F] transition-colors whitespace-nowrap"
                   >
                     +020 8038 9961
                   </a>
@@ -244,27 +252,32 @@ export default function Header({
               </div>
 
               {/* Buttons */}
-              <Button variant="outline" size="sm" asChild>
+              <Button
+                variant="outline"
+                size="sm"
+                asChild
+                className="flex-shrink-0"
+              >
                 <Link to="/contact">
                   <Mail className="w-4 h-4" />
                   Email Us
                 </Link>
               </Button>
-              <Button size="sm" asChild>
+              <Button size="sm" asChild className="flex-shrink-0">
                 <Link to="/#pricing">View Packages</Link>
               </Button>
             </div>
 
             {/* Mobile menu button */}
             <button
-              className="lg:hidden p-2 hover:bg-gray-100 rounded-md transition-colors"
+              className="lg:hidden p-2 hover:bg-gray-100 rounded-md transition-colors flex-shrink-0"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               aria-label="Toggle menu"
             >
               {mobileMenuOpen ? (
-                <X className="w-6 h-6 text-[#262626]" />
+                <X className="w-5 h-5 sm:w-6 sm:h-6 text-[#262626]" />
               ) : (
-                <Menu className="w-6 h-6 text-[#262626]" />
+                <Menu className="w-5 h-5 sm:w-6 sm:h-6 text-[#262626]" />
               )}
             </button>
           </div>
@@ -272,9 +285,9 @@ export default function Header({
       </div>
 
       {/* Desktop Navigation - Centered in Middle of Page */}
-      <div className="hidden lg:block w-full border-b border-[#E0E0E0] bg-white">
-        <div className="flex justify-center items-center w-full py-4">
-          <nav className="flex items-center justify-center gap-8">
+      <div className="hidden lg:block w-full border-b border-[#E0E0E0] bg-white overflow-x-hidden">
+        <div className="flex justify-center items-center w-full py-4 px-4">
+          <nav className="flex items-center justify-center gap-6 xl:gap-10 flex-wrap">
             {navLinks.map((link) =>
               link.hasDropdown ? (
                 // Services Dropdown
@@ -374,9 +387,9 @@ export default function Header({
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
-            className="lg:hidden border-b border-[#E0E0E0] bg-white"
+            className="lg:hidden border-b border-[#E0E0E0] bg-white overflow-hidden"
           >
-            <nav className="max-w-7xl mx-auto px-4 py-4 flex flex-col gap-3">
+            <nav className="max-w-7xl mx-auto px-4 py-4 flex flex-col gap-3 max-h-[70vh] overflow-y-auto">
               {navLinks.map((link) =>
                 link.to ? (
                   <Link
@@ -385,7 +398,7 @@ export default function Header({
                     onClick={() => {
                       setMobileMenuOpen(false);
                     }}
-                    className={`text-base font-semibold py-2 transition-colors hover:text-[#D30B5F] ${
+                    className={`text-sm sm:text-base font-semibold py-2 transition-colors hover:text-[#D30B5F] ${
                       isActive(link) ? "text-[#D30B5F]" : "text-black"
                     }`}
                   >
@@ -401,7 +414,7 @@ export default function Header({
                         setMobileMenuOpen(false);
                       }
                     }}
-                    className={`text-base font-semibold py-2 transition-colors hover:text-[#D30B5F] ${
+                    className={`text-sm sm:text-base font-semibold py-2 transition-colors hover:text-[#D30B5F] ${
                       isActive(link) ? "text-[#D30B5F]" : "text-black"
                     }`}
                   >
@@ -410,10 +423,10 @@ export default function Header({
                 )
               )}
               <div className="flex flex-col gap-3 pt-4 border-t border-[#E0E0E0]">
-                <Button variant="outline" asChild>
+                <Button variant="outline" asChild className="w-full">
                   <Link to="/contact">Email Us</Link>
                 </Button>
-                <Button asChild>
+                <Button asChild className="w-full">
                   <Link to="/#pricing">View Packages</Link>
                 </Button>
               </div>

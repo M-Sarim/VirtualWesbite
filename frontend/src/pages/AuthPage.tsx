@@ -75,7 +75,7 @@ export function AuthPage({
     try {
       // Simulate registration
       await new Promise((resolve) => setTimeout(resolve, 1000));
-      navigate("/dashboard");
+      navigate("/personalize");
     } catch (err) {
       setError(err instanceof Error ? err.message : "Registration failed");
     } finally {

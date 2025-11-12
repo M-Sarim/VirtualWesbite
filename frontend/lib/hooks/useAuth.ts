@@ -5,32 +5,44 @@ interface LoginCredentials {
   email: string;
   password: string;
   rememberMe: boolean;
+  role?: "admin" | "user";
 }
 
 interface RegisterData {
   name: string;
   email: string;
   password: string;
-  role: string;
+  role: "admin" | "user";
 }
 
 interface User {
   email: string;
   name?: string;
+  role: "admin" | "user";
 }
 
 export function useAuth() {
   const navigate = useNavigate();
-  const [user, setUser] = useState<User | null>(null);
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [user, setUser] = useState<User | null>(() => {
+    const stored = localStorage.getItem("user");
+    return stored ? JSON.parse(stored) : null;
+  });
+  const [isAuthenticated, setIsAuthenticated] = useState(() => {
+    return !!localStorage.getItem("user");
+  });
 
   const login = async (credentials: LoginCredentials) => {
     // Simulate API call
     return new Promise((resolve, reject) => {
       setTimeout(() => {
         if (credentials.email && credentials.password) {
+          // For demo: if email is admin@site.com, role is admin, else user
+          const role =
+            credentials.email === "admin@site.com" ? "admin" : "user";
+          const userObj: User = { email: credentials.email, role };
           setIsAuthenticated(true);
-          setUser({ email: credentials.email });
+          setUser(userObj);
+          localStorage.setItem("user", JSON.stringify(userObj));
           navigate("/dashboard");
           resolve({ success: true });
         } else {
@@ -44,9 +56,15 @@ export function useAuth() {
     // Simulate API call
     return new Promise((resolve, reject) => {
       setTimeout(() => {
-        if (data.email && data.password && data.name) {
+        if (data.email && data.password && data.name && data.role) {
+          const userObj: User = {
+            email: data.email,
+            name: data.name,
+            role: data.role,
+          };
           setIsAuthenticated(true);
-          setUser({ email: data.email, name: data.name });
+          setUser(userObj);
+          localStorage.setItem("user", JSON.stringify(userObj));
           navigate("/dashboard");
           resolve({ success: true });
         } else {
@@ -59,6 +77,7 @@ export function useAuth() {
   const logout = () => {
     setIsAuthenticated(false);
     setUser(null);
+    localStorage.removeItem("user");
     navigate("/login");
   };
 

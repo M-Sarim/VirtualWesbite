@@ -65,35 +65,46 @@ export default function ContactForm() {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+      className="space-y-4 sm:space-y-5 w-full"
+    >
       {/* Success message */}
       {submitted && (
         <motion.div
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -10 }}
-          className="p-4 bg-green-50 border border-green-200 rounded-lg flex items-center gap-3"
+          className="p-3 sm:p-4 bg-green-50 border border-green-200 rounded-lg flex items-center gap-2 sm:gap-3"
         >
-          <CheckCircle2 className="w-5 h-5 text-green-500" aria-hidden="true" />
-          <div>
-            <p className="font-medium text-green-800">
+          <CheckCircle2
+            className="w-4 h-4 sm:w-5 sm:h-5 text-green-500 flex-shrink-0"
+            aria-hidden="true"
+          />
+          <div className="min-w-0 flex-1">
+            <p className="font-medium text-green-800 text-sm sm:text-base">
               Thanks for reaching out!
             </p>
-            <p className="text-sm text-green-600">We'll be in touch soon.</p>
+            <p className="text-xs sm:text-sm text-green-600">
+              We'll be in touch soon.
+            </p>
           </div>
         </motion.div>
       )}
 
       {/* Name and Email in a row */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 w-full">
         {/* Name field */}
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1 }}
-          className="space-y-2"
+          className="space-y-2 w-full"
         >
-          <Label htmlFor="name" className="text-gray-600 text-sm font-normal">
+          <Label
+            htmlFor="name"
+            className="text-gray-600 text-xs sm:text-sm font-normal"
+          >
             First Name
           </Label>
           <Input
@@ -124,9 +135,12 @@ export default function ContactForm() {
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
-          className="space-y-2"
+          className="space-y-2 w-full"
         >
-          <Label htmlFor="email" className="text-gray-600 text-sm font-normal">
+          <Label
+            htmlFor="email"
+            className="text-gray-600 text-xs sm:text-sm font-normal"
+          >
             Email Address
           </Label>
           <Input
@@ -134,7 +148,7 @@ export default function ContactForm() {
             type="email"
             placeholder=""
             {...register("email")}
-            className={`h-12 bg-white border-gray-300 ${
+            className={`h-10 sm:h-12 bg-white border-gray-300 text-sm sm:text-base ${
               errors.email ? "border-red-500" : ""
             }`}
             aria-invalid={errors.email ? "true" : "false"}
@@ -143,26 +157,32 @@ export default function ContactForm() {
             <motion.p
               initial={{ opacity: 0, height: 0 }}
               animate={{ opacity: 1, height: "auto" }}
-              className="text-sm text-red-500 flex items-center gap-1"
+              className="text-xs sm:text-sm text-red-500 flex items-center gap-1"
               role="alert"
             >
-              <AlertCircle className="w-4 h-4" aria-hidden="true" />
-              {errors.email.message}
+              <AlertCircle
+                className="w-3 h-3 sm:w-4 sm:h-4 flex-shrink-0"
+                aria-hidden="true"
+              />
+              <span className="break-words">{errors.email.message}</span>
             </motion.p>
           )}
         </motion.div>
       </div>
 
       {/* Phone and Company in a row */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 w-full">
         {/* Phone field */}
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3 }}
-          className="space-y-2"
+          className="space-y-2 w-full"
         >
-          <Label htmlFor="phone" className="text-gray-600 text-sm font-normal">
+          <Label
+            htmlFor="phone"
+            className="text-gray-600 text-xs sm:text-sm font-normal"
+          >
             Phone Number
           </Label>
           <Input
@@ -170,7 +190,7 @@ export default function ContactForm() {
             type="tel"
             placeholder=""
             {...register("phone")}
-            className={`h-12 bg-white border-gray-300 ${
+            className={`h-10 sm:h-12 bg-white border-gray-300 text-sm sm:text-base ${
               errors.phone ? "border-red-500" : ""
             }`}
             aria-invalid={errors.phone ? "true" : "false"}
@@ -179,11 +199,14 @@ export default function ContactForm() {
             <motion.p
               initial={{ opacity: 0, height: 0 }}
               animate={{ opacity: 1, height: "auto" }}
-              className="text-sm text-red-500 flex items-center gap-1"
+              className="text-xs sm:text-sm text-red-500 flex items-center gap-1"
               role="alert"
             >
-              <AlertCircle className="w-4 h-4" aria-hidden="true" />
-              {errors.phone.message}
+              <AlertCircle
+                className="w-3 h-3 sm:w-4 sm:h-4 flex-shrink-0"
+                aria-hidden="true"
+              />
+              <span className="break-words">{errors.phone.message}</span>
             </motion.p>
           )}
         </motion.div>
@@ -193,11 +216,11 @@ export default function ContactForm() {
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.4 }}
-          className="space-y-2"
+          className="space-y-2 w-full"
         >
           <Label
             htmlFor="company"
-            className="text-gray-600 text-sm font-normal"
+            className="text-gray-600 text-xs sm:text-sm font-normal"
           >
             Company Name
           </Label>

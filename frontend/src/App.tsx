@@ -11,6 +11,8 @@ const ContactPage = lazy(() => import("./pages/ContactPage"));
 const DashboardPage = lazy(() => import("./pages/DashboardPage"));
 const LoginPage = lazy(() => import("./pages/LoginPage"));
 const SignupPage = lazy(() => import("./pages/SignupPage"));
+const PersonalizationPage = lazy(() => import("./pages/PersonalizationPage"));
+const AdminPage = lazy(() => import("./pages/AdminPage"));
 
 function App() {
   // Track page views automatically on route changes
@@ -28,6 +30,8 @@ function App() {
           <Route path="/dashboard" element={<DashboardPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/signup" element={<SignupPage />} />
+          <Route path="/personalize" element={<PersonalizationPage />} />
+          <Route path="/admin" element={<AdminPage />} />
         </Routes>
       </Suspense>
       <Toaster position="top-right" richColors />

@@ -13,9 +13,11 @@ import {
   LogOut,
   Menu,
   X,
+  Shield,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useAuth } from "@/lib/hooks/useAuth";
 
 interface NavItem {
   title: string;
@@ -82,6 +84,19 @@ const bottomNavItems: NavItem[] = [
 export default function Sidebar() {
   const location = useLocation();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const { user, logout } = useAuth();
+  const [isAdmin, setIsAdmin] = useState(false);
+
+  useEffect(() => {
+    // Check if user is admin
+    setIsAdmin(user?.role === "admin");
+  }, [user]);
+
+  const adminNavItem: NavItem = {
+    title: "Admin Panel",
+    href: "/admin",
+    icon: Shield,
+  };
 
   const SidebarContent = () => (
     <>
@@ -101,6 +116,36 @@ export default function Sidebar() {
       {/* Main Navigation */}
       <nav className="flex-1 px-4 py-6 overflow-y-auto sidebar-scroll">
         <div className="space-y-1">
+          {/* Admin Panel Link (only for admins) */}
+          {isAdmin && (
+            <>
+              {(() => {
+                const Icon = adminNavItem.icon;
+                const isActive = location.pathname === adminNavItem.href;
+                return (
+                  <Link
+                    key={adminNavItem.href}
+                    to={adminNavItem.href}
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    className={cn(
+                      "flex items-center space-x-3 px-4 py-3 rounded-lg transition-all duration-200",
+                      isActive
+                        ? "text-white shadow-lg"
+                        : "text-purple-400 hover:bg-white/5 hover:text-white"
+                    )}
+                    style={
+                      isActive ? { backgroundColor: "#2D2D2D" } : undefined
+                    }
+                  >
+                    <Icon className="w-5 h-5" />
+                    <span className="font-medium">{adminNavItem.title}</span>
+                  </Link>
+                );
+              })()}
+              <div className="my-3 border-t border-white/10" />
+            </>
+          )}
+
           {mainNavItems.map((item) => {
             const Icon = item.icon;
             const isActive = location.pathname === item.href;
@@ -162,18 +207,24 @@ export default function Sidebar() {
             className="w-10 h-10 rounded-full flex items-center justify-center text-white font-semibold"
             style={{ backgroundColor: "#2D2D2D" }}
           >
-            JD
+            {user?.name?.[0]?.toUpperCase() || "U"}
           </div>
           <div className="flex-1 min-w-0">
-            <p className="text-white text-sm font-medium truncate">John Doe</p>
-            <p className="text-gray-400 text-xs truncate">john@example.com</p>
+            <p className="text-white text-sm font-medium truncate">
+              {user?.name || "User"}
+              {isAdmin && (
+                <span className="ml-2 text-xs text-purple-400">(Admin)</span>
+              )}
+            </p>
+            <p className="text-gray-400 text-xs truncate">
+              {user?.email || "user@example.com"}
+            </p>
           </div>
         </div>
         <button
           className="w-full mt-2 flex items-center justify-center space-x-2 px-4 py-2 rounded-lg text-gray-400 hover:bg-red-500/10 hover:text-red-400 transition-all duration-200"
           onClick={() => {
-            // Handle logout
-            window.location.href = "/login";
+            logout();
           }}
         >
           <LogOut className="w-4 h-4" />

@@ -38,7 +38,9 @@
     "@radix-ui/react-toggle": "1.1.1",
     "@radix-ui/react-toggle-group": "1.1.1",
     "@radix-ui/react-tooltip": "1.1.6",
+    "@types/canvas-confetti": "^1.9.0",
     "@types/gtag.js": "^0.0.20",
+    "canvas-confetti": "^1.9.4",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "cmdk": "1.0.4",
@@ -52,6 +54,8 @@
     "react": "^18.3.1",
     "react-day-picker": "9.8.0",
     "react-dom": "^18.3.1",
+    "react-dropzone": "^14.3.8",
+    "react-easy-crop": "^5.5.3",
     "react-error-boundary": "^4.1.2",
     "react-hook-form": "^7.60.0",
     "react-live-chat-loader": "^2.11.0",
@@ -64,7 +68,8 @@
     "tailwindcss-animate": "^1.0.7",
     "tippy.js": "^6.3.7",
     "vaul": "^0.9.9",
-    "zod": "3.25.76"
+    "zod": "3.25.76",
+    "zustand": "^5.0.8"
   },
   "devDependencies": {
     "@types/dompurify": "^3.2.0",

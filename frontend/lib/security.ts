@@ -68,17 +68,84 @@ export const loginSchema = z.object({
 });
 
 /**
- * Signup form schema
+ * Validate date of birth (dd/mm/yyyy)
+ */
+export const dateOfBirthSchema = z
+  .string()
+  .regex(
+    /^(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[012])\/(19|20)\d\d$/,
+    "Date must be in dd/mm/yyyy format"
+  )
+  .refine((date) => {
+    const [day, month, year] = date.split("/").map(Number);
+    const birthDate = new Date(year, month - 1, day);
+    const today = new Date();
+    const age = today.getFullYear() - birthDate.getFullYear();
+    return age >= 18;
+  }, "You must be at least 18 years old");
+
+/**
+ * Validate postcode/ZIP
+ */
+export const postcodeSchema = z
+  .string()
+  .min(3, "Postcode/ZIP must be at least 3 characters")
+  .max(10, "Postcode/ZIP is too long");
+
+/**
+ * Signup form schema - Complete User Registration
  */
 export const signupSchema = z
   .object({
-    name: z
-      .string()
-      .min(2, "Name must be at least 2 characters")
-      .max(50, "Name too long"),
+    // Personal Information
     email: emailSchema,
     password: passwordSchema,
     confirmPassword: z.string(),
+    firstName: z
+      .string()
+      .min(2, "First name must be at least 2 characters")
+      .max(50, "First name too long")
+      .regex(/^[a-zA-Z\s\-']+$/, "First name contains invalid characters"),
+    middleName: z
+      .string()
+      .max(50, "Middle name too long")
+      .regex(/^[a-zA-Z\s\-']*$/, "Middle name contains invalid characters")
+      .optional()
+      .or(z.literal("")),
+    surname: z
+      .string()
+      .min(2, "Surname must be at least 2 characters")
+      .max(50, "Surname too long")
+      .regex(/^[a-zA-Z\s\-']+$/, "Surname contains invalid characters"),
+    dateOfBirth: dateOfBirthSchema,
+    phone: phoneSchema,
+    nationality: z.string().min(2, "Please select your nationality"),
+
+    // Address Details
+    addressLine1: z
+      .string()
+      .min(5, "Address must be at least 5 characters")
+      .max(100, "Address too long"),
+    addressLine2: z
+      .string()
+      .max(100, "Address too long")
+      .optional()
+      .or(z.literal("")),
+    cityTown: z
+      .string()
+      .min(2, "City/Town must be at least 2 characters")
+      .max(50, "City/Town name too long")
+      .regex(/^[a-zA-Z\s\-']+$/, "City/Town contains invalid characters"),
+    postcodeZip: postcodeSchema,
+    country: z.string().min(2, "Please select a country"),
+
+    // Company Information
+    companyType: z.enum(["LTD Company", "Sole Trader", "Virtual Address"], {
+      errorMap: () => ({ message: "Please select a company type" }),
+    }),
+
+    // System fields
+    role: z.enum(["admin", "user"]),
     terms: z
       .boolean()
       .refine(

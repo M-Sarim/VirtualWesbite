@@ -119,12 +119,12 @@ export default function ContactPage() {
   return (
     <>
       <Header />
-      <main className="min-h-screen pt-[140px] bg-gray-50">
+      <main className="min-h-screen pt-[140px] sm:pt-[160px] lg:pt-[180px] bg-gray-50 w-full overflow-hidden">
         {/* Hero Section */}
-        <section className="py-12 px-4 sm:px-6 lg:px-8 bg-white">
-          <div className="max-w-7xl mx-auto">
-            <h1 className="heading-main mb-4">Contact Us</h1>
-            <p className="text-gray-600 max-w-3xl leading-relaxed">
+        <section className="py-8 sm:py-12 px-4 sm:px-6 lg:px-8 bg-white w-full">
+          <div className="max-w-7xl mx-auto w-full">
+            <h1 className="heading-main mb-3 sm:mb-4">Contact Us</h1>
+            <p className="text-sm sm:text-base text-gray-600 max-w-3xl leading-relaxed">
               Get in touch with our team today. Call, email or speak to us via
               our website's Live Chat service. Our customer service team is
               always happy to assist no matter how small or large your request.
@@ -132,38 +132,38 @@ export default function ContactPage() {
           </div>
         </section>
 
-        <section className="py-16 px-4 sm:px-6 lg:px-8">
-          <div className="max-w-7xl mx-auto">
-            <div className="grid lg:grid-cols-2 gap-8">
+        <section className="py-8 sm:py-12 lg:py-16 px-4 sm:px-6 lg:px-8 w-full">
+          <div className="max-w-7xl mx-auto w-full">
+            <div className="grid lg:grid-cols-2 gap-6 sm:gap-8 w-full">
               {/* Left Column - FAQ */}
-              <div className="space-y-8">
+              <div className="space-y-6 sm:space-y-8 w-full">
                 {/* Find Quick Answers */}
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5 }}
-                  className="bg-white rounded-xl p-6 shadow-sm"
+                  className="bg-white rounded-xl p-4 sm:p-6 shadow-sm w-full"
                 >
-                  <h2 className="text-2xl font-bold mb-6 text-[#2D2D2D]">
+                  <h2 className="text-xl sm:text-2xl font-bold mb-4 sm:mb-6 text-[#2D2D2D]">
                     Find Quick Answers
                   </h2>
-                  <div className="space-y-2">
+                  <div className="space-y-2 w-full">
                     {faqs.map((faq, idx) => (
                       <div
                         key={idx}
-                        className="border-b border-gray-200 last:border-0"
+                        className="border-b border-gray-200 last:border-0 w-full"
                       >
                         <button
                           onClick={() =>
                             setOpenFaq(openFaq === idx ? null : idx)
                           }
-                          className="w-full py-4 flex justify-between items-start text-left hover:text-[#D30B5F] transition-colors"
+                          className="w-full py-3 sm:py-4 flex justify-between items-start text-left hover:text-[#D30B5F] transition-colors"
                         >
-                          <span className="text-sm font-medium text-gray-700 pr-4">
+                          <span className="text-xs sm:text-sm font-medium text-gray-700 pr-3 sm:pr-4 break-words flex-1">
                             {faq.question}
                           </span>
                           <ChevronDown
-                            className={`w-5 h-5 text-gray-400 flex-shrink-0 transition-transform ${
+                            className={`w-4 h-4 sm:w-5 sm:h-5 text-gray-400 flex-shrink-0 transition-transform ${
                               openFaq === idx ? "rotate-180" : ""
                             }`}
                           />
@@ -173,9 +173,9 @@ export default function ContactPage() {
                             initial={{ height: 0, opacity: 0 }}
                             animate={{ height: "auto", opacity: 1 }}
                             exit={{ height: 0, opacity: 0 }}
-                            className="pb-4"
+                            className="pb-3 sm:pb-4"
                           >
-                            <p className="text-sm text-gray-600 leading-relaxed">
+                            <p className="text-xs sm:text-sm text-gray-600 leading-relaxed break-words">
                               {faq.answer}
                             </p>
                           </motion.div>
@@ -190,16 +190,16 @@ export default function ContactPage() {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5, delay: 0.1 }}
-                  className="bg-white rounded-xl p-6 shadow-sm"
+                  className="bg-white rounded-xl p-4 sm:p-6 shadow-sm w-full"
                 >
-                  <h2 className="text-xl font-bold mb-4 text-[#2D2D2D]">
+                  <h2 className="text-lg sm:text-xl font-bold mb-3 sm:mb-4 text-[#2D2D2D]">
                     Compliance, Identification & Account Status
                   </h2>
-                  <div className="space-y-2">
+                  <div className="space-y-2 w-full">
                     {complianceFaqs.map((faq, idx) => (
                       <div
                         key={`compliance-${idx}`}
-                        className="border-b border-gray-200 last:border-0"
+                        className="border-b border-gray-200 last:border-0 w-full"
                       >
                         <button
                           onClick={() =>
@@ -209,13 +209,13 @@ export default function ContactPage() {
                                 : (`compliance-${idx}` as any)
                             )
                           }
-                          className="w-full py-4 flex justify-between items-start text-left hover:text-[#D30B5F] transition-colors"
+                          className="w-full py-3 sm:py-4 flex justify-between items-start text-left hover:text-[#D30B5F] transition-colors"
                         >
-                          <span className="text-sm font-medium text-gray-700 pr-4">
+                          <span className="text-xs sm:text-sm font-medium text-gray-700 pr-3 sm:pr-4 break-words flex-1">
                             {faq.question}
                           </span>
                           <ChevronDown
-                            className={`w-5 h-5 text-gray-400 flex-shrink-0 transition-transform ${
+                            className={`w-4 h-4 sm:w-5 sm:h-5 text-gray-400 flex-shrink-0 transition-transform ${
                               openFaq === `compliance-${idx}`
                                 ? "rotate-180"
                                 : ""
@@ -226,9 +226,9 @@ export default function ContactPage() {
                           <motion.div
                             initial={{ height: 0, opacity: 0 }}
                             animate={{ height: "auto", opacity: 1 }}
-                            className="pb-4"
+                            className="pb-3 sm:pb-4"
                           >
-                            <p className="text-sm text-gray-600 leading-relaxed">
+                            <p className="text-xs sm:text-sm text-gray-600 leading-relaxed break-words">
                               {faq.answer}
                             </p>
                           </motion.div>

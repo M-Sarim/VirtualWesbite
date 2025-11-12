@@ -178,9 +178,9 @@ export default function Services() {
   return (
     <section
       id="services"
-      className="py-20 bg-gradient-to-b from-gray-50/50 to-white"
+      className="py-12 sm:py-16 lg:py-20 bg-gradient-to-b from-gray-50/50 to-white w-full overflow-hidden"
     >
-      <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 w-full">
         {/* Header */}
         <motion.div
           id="pricing"
@@ -188,15 +188,17 @@ export default function Services() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="text-center mb-12"
+          className="text-center mb-8 sm:mb-12 w-full"
         >
           <div className="inline-block mb-4">
-            <span className="px-6 py-2 bg-[#D40E60] text-white text-sm font-semibold rounded-full">
+            <span className="px-4 sm:px-6 py-2 bg-[#D40E60] text-white text-xs sm:text-sm font-semibold rounded-full">
               Limited Company Formation Packages
             </span>
           </div>
-          <h2 className="text-3xl md:text-4xl font-bold text-[#727272] mb-4">
-            Set up your company with an affordable package today.
+          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-[#727272] mb-4 px-4">
+            <strong>
+              Set up your company with an affordable package today.
+            </strong>
           </h2>
         </motion.div>
 
@@ -206,7 +208,7 @@ export default function Services() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-12"
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-8 sm:mb-12 w-full"
         >
           {pricingPackages.map((pkg, idx) => (
             <motion.div
@@ -227,24 +229,26 @@ export default function Services() {
               )}
 
               {/* Card */}
-              <div className="bg-white rounded-2xl shadow-[0_2px_20px_rgba(0,0,0,0.08)] hover:shadow-[0_8px_30px_rgba(0,0,0,0.15)] transition-all duration-300 overflow-hidden border-t-4 border-[#D40E60] h-full flex flex-col">
+              <div className="bg-white rounded-2xl shadow-[0_2px_20px_rgba(0,0,0,0.08)] hover:shadow-[0_8px_30px_rgba(0,0,0,0.15)] transition-all duration-300 overflow-hidden border-t-4 border-[#D40E60] h-full flex flex-col w-full">
                 {/* Card Header */}
-                <div className="p-6 pb-4">
-                  <h3 className="text-2xl font-bold text-[#D40E60] mb-3">
-                    {pkg.name}
+                <div className="p-4 sm:p-6 pb-3 sm:pb-4">
+                  <h3 className="text-xl sm:text-2xl font-bold text-[#D40E60] mb-2 sm:mb-3">
+                    <strong>{pkg.name}</strong>
                   </h3>
-                  <p className="text-sm text-gray-600 leading-relaxed min-h-[80px]">
+                  <p className="text-xs sm:text-sm text-gray-600 leading-relaxed min-h-[60px] sm:min-h-[80px]">
                     {pkg.description}
                   </p>
                 </div>
 
                 {/* Price Section */}
-                <div className="px-6 pb-6">
-                  <div className="flex items-baseline gap-2 mb-4">
-                    <span className="text-4xl font-bold text-[#D40E60]">
+                <div className="px-4 sm:px-6 pb-4 sm:pb-6">
+                  <div className="flex items-baseline gap-2 mb-3 sm:mb-4">
+                    <span className="text-3xl sm:text-4xl font-bold text-[#D40E60]">
                       {pkg.price}
                     </span>
-                    <span className="text-sm text-gray-500">{pkg.vat}</span>
+                    <span className="text-xs sm:text-sm text-gray-500">
+                      {pkg.vat}
+                    </span>
                   </div>
                 </div>
 
@@ -464,45 +468,17 @@ export default function Services() {
             <h2 className="text-2xl md:text-3xl font-semibold text-center mb-8 text-gray-700">
               Payment Options
             </h2>
-            <div className="flex flex-wrap justify-center items-center gap-12 md:gap-20 mb-8">
+            <div className="flex justify-center items-center mb-8">
               <img
-                src="/images/AMEX-logo.png"
-                alt="AMEX"
-                className="h-10 md:h-14 w-auto"
-              />
-              <img
-                src="/images/VISA-logo.png"
-                alt="VISA"
-                className="h-10 md:h-14 w-auto"
-              />
-              <img
-                src="/images/PAYPAL-logo.png"
-                alt="PayPal"
-                className="h-10 md:h-14 w-auto"
-              />
-              <img
-                src="/images/MASTER-logo.png"
-                alt="Mastercard"
-                className="h-10 md:h-14 w-auto"
+                src="/src/images/payment-options.png"
+                alt="Payment Methods"
+                className="h-14 md:h-20 w-auto object-contain bg-white rounded shadow"
               />
             </div>
             <p className="text-center text-lg md:text-xl text-gray-500 font-medium">
               All prices are excluding VAT
             </p>
           </div>
-        </motion.div>
-
-        {/* Footer Note */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.4 }}
-          className="text-center text-xs text-gray-500 mt-6 py-4"
-        >
-          <p className="font-medium tracking-wide">
-            All prices are excluding VAT
-          </p>
         </motion.div>
       </div>
     </section>
