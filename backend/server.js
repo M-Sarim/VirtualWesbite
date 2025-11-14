@@ -6,7 +6,6 @@ const bodyParser = require("body-parser");
 
 // Route imports
 const authRoutes = require("./routes/auth");
-const personalizationRoutes = require("./routes/personalization");
 const companiesRoutes = require("./routes/companies");
 const contactRoutes = require("./routes/contact");
 const adminRoutes = require("./routes/admin");
@@ -20,7 +19,6 @@ app.use(bodyParser.json());
 
 // API routes
 app.use("/api/auth", authRoutes);
-app.use("/api/personalization", personalizationRoutes);
 app.use("/api/companies", companiesRoutes);
 app.use("/api/contact", contactRoutes);
 app.use("/api/admin", adminRoutes);

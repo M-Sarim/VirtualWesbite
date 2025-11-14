@@ -122,9 +122,6 @@ export default function SignupPage() {
       users.push(newUser);
       localStorage.setItem("users", JSON.stringify(users));
 
-      // Reset personalization wizard state for new user
-      localStorage.removeItem("personalization-wizard");
-      localStorage.removeItem("personalizationComplete");
       // Log activity
       const logs = JSON.parse(localStorage.getItem("activityLogs") || "[]");
       logs.push({
