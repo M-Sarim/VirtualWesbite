@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
 import { Check, ChevronDown } from "lucide-react";
 import { useState } from "react";
+import paymentOptions from "@/src/images/payment-options.png";
 
 const pricingPackages = [
   {
@@ -470,7 +471,7 @@ export default function Services() {
             </h2>
             <div className="flex justify-center items-center mb-8">
               <img
-                src="/src/images/payment-options.png"
+                src={paymentOptions}
                 alt="Payment Methods"
                 className="h-14 md:h-20 w-auto object-contain bg-white rounded shadow"
               />

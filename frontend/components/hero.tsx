@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Search } from "lucide-react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import buildingImage from "@/src/images/building.png";
 
 export default function Hero() {
   const [searchTerm, setSearchTerm] = useState("");
@@ -113,7 +114,7 @@ export default function Hero() {
             {/* Building Image */}
             <div className="relative rounded-3xl overflow-hidden shadow-2xl w-full">
               <img
-                src="/src/images/building.png"
+                src={buildingImage}
                 alt="UK Business Building"
                 className="w-full h-[400px] lg:h-[500px] xl:h-[600px] object-cover"
               />

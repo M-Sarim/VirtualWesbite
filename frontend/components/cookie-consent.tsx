@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { X, ChevronRight, Cookie } from "lucide-react";
 
@@ -231,16 +231,16 @@ export function CookieConsent() {
 
   const togglePreference = (key: keyof typeof preferences) => {
     if (key === "necessary") return; // Can't disable necessary cookies
-    setPreferences((prev) => ({
+    setPreferences((prev: typeof preferences) => ({
       ...prev,
       [key]: !prev[key],
     }));
   };
 
   const toggleCategory = (category: string) => {
-    setExpandedCategories((prev) =>
+    setExpandedCategories((prev: string[]) =>
       prev.includes(category)
-        ? prev.filter((c) => c !== category)
+        ? prev.filter((c: string) => c !== category)
         : [...prev, category]
     );
   };
@@ -347,7 +347,10 @@ export function CookieConsent() {
   };
 
   const toggleCookieToggle = (name: string) => {
-    setCookieToggles((prev) => ({ ...prev, [name]: !prev[name] }));
+    setCookieToggles((prev: Record<string, boolean>) => ({
+      ...prev,
+      [name]: !prev[name],
+    }));
   };
 
   return (
@@ -466,7 +469,7 @@ export function CookieConsent() {
       {/* Customization Modal */}
       {showModal && (
         <div
-          onMouseDown={(e) => {
+          onMouseDown={(e: React.MouseEvent<HTMLDivElement>) => {
             // Close when clicking outside the modal (overlay)
             if (e.target === e.currentTarget) closeModal();
           }}

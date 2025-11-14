@@ -1,54 +1,9 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Menu, X, Phone, Mail, ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { AnimatePresence, motion } from "framer-motion";
-// Trustpilot badge styles
-const trustpilotStyles = {
-  container: {
-    display: "flex",
-    alignItems: "center",
-    gap: "0.5rem",
-    background: "rgba(255,255,255,0.95)",
-    borderRadius: "1.5rem",
-    boxShadow: "0 2px 12px rgba(0,0,0,0.07)",
-    padding: "0.5rem 1rem",
-    margin: "1rem 0",
-    maxWidth: "100%",
-    width: "100%",
-    flexWrap: "wrap" as const,
-    justifyContent: "center" as const,
-  },
-  stars: {
-    color: "#00B67A",
-    fontSize: "clamp(1rem, 2vw, 1.5rem)",
-    marginRight: "0.25rem",
-    letterSpacing: "0.1em",
-  },
-  score: {
-    fontWeight: 700,
-    fontSize: "clamp(0.9rem, 1.5vw, 1.1rem)",
-    color: "#222",
-    marginRight: "0.25rem",
-  },
-  reviews: {
-    color: "#666",
-    fontSize: "clamp(0.75rem, 1.2vw, 1rem)",
-    marginRight: "0.25rem",
-  },
-  trustpilot: {
-    display: "flex",
-    alignItems: "center",
-    gap: "0.3rem",
-    fontWeight: 500,
-    color: "#00B67A",
-    fontSize: "clamp(0.75rem, 1.2vw, 1rem)",
-  },
-  tick: {
-    color: "#00B67A",
-    fontSize: "clamp(0.9rem, 1.5vw, 1.1rem)",
-  },
-};
+import companyLogo from "@/src/images/company-logo.png";
 
 export default function Header({
   showFlashSale = true,
@@ -79,22 +34,6 @@ export default function Header({
       } else {
         // No hash - we're at the home page root
       }
-    } else {
-      // On other pages (blog, about, etc.)
-      {
-        /* Trustpilot Review Badge */
-      }
-      <div style={trustpilotStyles.container}>
-        <span style={trustpilotStyles.stars}>{"★★★★★"}</span>
-        <span style={trustpilotStyles.score}>Excellent</span>
-        <span style={trustpilotStyles.reviews}>
-          4.8 out of 5 based on 8,370 reviews
-        </span>
-        <span style={trustpilotStyles.trustpilot}>
-          <span style={trustpilotStyles.tick}>✔</span>
-          Verified by Trustpilot
-        </span>
-      </div>;
     }
   }, [location]);
 
@@ -218,7 +157,7 @@ export default function Header({
               className="flex items-center gap-2 sm:gap-3 group flex-shrink-0"
             >
               <img
-                src="/src/images/company-logo.png"
+                src={companyLogo}
                 alt="Company Logo"
                 className="h-10 sm:h-12 w-auto object-contain drop-shadow-sm bg-white rounded border border-gray-200"
                 style={{ maxWidth: "50px" }}
