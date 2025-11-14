@@ -122,6 +122,9 @@ export default function SignupPage() {
       users.push(newUser);
       localStorage.setItem("users", JSON.stringify(users));
 
+      // Reset personalization wizard state for new user
+      localStorage.removeItem("personalization-wizard");
+      localStorage.removeItem("personalizationComplete");
       // Log activity
       const logs = JSON.parse(localStorage.getItem("activityLogs") || "[]");
       logs.push({
@@ -134,7 +137,7 @@ export default function SignupPage() {
       localStorage.setItem("activityLogs", JSON.stringify(logs));
 
       toast.success("Account created successfully!");
-      navigate("/login");
+      navigate("/dashboard");
     } catch (err) {
       setError(err instanceof Error ? err.message : "Registration failed");
     } finally {

@@ -42,7 +42,7 @@ export const event = ({
 };
 
 // Facebook Pixel Events
-export const FB_PIXEL_ID = "YOUR_PIXEL_ID"; // Replace with your actual ID
+export const FB_PIXEL_ID = "REPLACE_WITH_REAL_PIXEL_ID"; // Replace with your actual Pixel ID
 
 export const fbPageView = () => {
   if (typeof window.fbq !== "undefined") {

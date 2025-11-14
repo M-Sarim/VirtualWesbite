@@ -43,7 +43,14 @@ export function useAuth() {
           setIsAuthenticated(true);
           setUser(userObj);
           localStorage.setItem("user", JSON.stringify(userObj));
-          navigate("/dashboard");
+          // Check personalization completion
+          const personalizationComplete =
+            localStorage.getItem("personalizationComplete") === "true";
+          if (personalizationComplete) {
+            navigate("/dashboard");
+          } else {
+            navigate("/personalize");
+          }
           resolve({ success: true });
         } else {
           reject(new Error("Invalid credentials"));

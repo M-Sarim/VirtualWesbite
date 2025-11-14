@@ -58,6 +58,7 @@ export default function Header({
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [servicesDropdownOpen, setServicesDropdownOpen] = useState(false);
+  // ...existing code...
   const location = useLocation();
 
   useEffect(() => {
@@ -165,10 +166,10 @@ export default function Header({
     { label: "Services", href: "/#services", hasDropdown: true },
     { label: "Pricing", href: "/#pricing" },
     { label: "Info", href: "/#info" },
+    // { label: "Companies House Search", to: "/companies-search" },
     { label: "Blog", to: "/blog" },
     { label: "About", to: "/about" },
     { label: "Contact Us", to: "/contact" },
-    { label: "Login", to: "/login" },
   ];
 
   const isActive = (link: (typeof navLinks)[0]) => {
@@ -265,6 +266,9 @@ export default function Header({
               </Button>
               <Button size="sm" asChild className="flex-shrink-0">
                 <Link to="/#pricing">View Packages</Link>
+              </Button>
+              <Button size="sm" asChild className="flex-shrink-0">
+                <Link to="/login">Login</Link>
               </Button>
             </div>
 
@@ -428,6 +432,9 @@ export default function Header({
                 </Button>
                 <Button asChild className="w-full">
                   <Link to="/#pricing">View Packages</Link>
+                </Button>
+                <Button asChild className="w-full">
+                  <Link to="/login">Login</Link>
                 </Button>
               </div>
             </nav>

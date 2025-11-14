@@ -352,61 +352,76 @@ export function CookieConsent() {
 
   return (
     <>
-      {/* Initial Banner (only on first visit) */}
+      {/*Initial Banner (only on first visit) */}
       {showBanner && !showModal && (
-        <div className="fixed bottom-4 left-4 right-4 md:left-auto md:right-4 md:max-w-sm z-50">
-          <div className="bg-white rounded-lg shadow-xl border border-gray-200 p-4 relative">
+        <div className="fixed bottom-0 left-0 z-50 animate-in slide-in-from-bottom-4 duration-500 w-full flex justify-center">
+          <div
+            className="bg-white/95 backdrop-blur-xl rounded-none shadow-2xl border-t border-gray-200/50 px-4 py-3 sm:px-8 sm:py-4 w-full max-w-[calc(100vw-12rem)] mx-24 flex flex-col sm:flex-row items-center justify-between gap-4"
+            style={{ boxShadow: "0 -8px 32px 0 rgba(31, 38, 135, 0.10)" }}
+          >
             <button
               onClick={rejectAll}
-              className="absolute top-3 right-3 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-full p-1 transition-all"
+              className="absolute top-4 right-4 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-full p-1.5 transition-all"
               aria-label="Close"
               title="Close"
             >
               <X className="h-4 w-4" />
             </button>
 
-            <div className="flex items-start gap-3 mb-3 pr-4">
-              <div className="flex-shrink-0 mt-0.5">
-                <Cookie className="w-6 h-6 text-[#D40E60]" />
+            <div className="flex items-start gap-4 mb-5 pr-8">
+              <div className="flex-shrink-0">
+                <div className="w-12 h-12 bg-gradient-to-br from-blue-50 to-blue-100 rounded-xl flex items-center justify-center">
+                  <Cookie className="w-6 h-6 text-blue-600" />
+                </div>
               </div>
-              <div className="text-sm text-gray-700 flex-1">
-                <p className="font-medium">{t("banner_message")}</p>
+              <div className="flex-1 min-w-0">
+                <h3 className="text-base sm:text-lg font-semibold text-gray-900 mb-1.5">
+                  {t("banner_message")}
+                </h3>
+                <p className="text-sm text-gray-600 leading-relaxed">
+                  We use cookies to enhance your browsing experience and analyze
+                  our traffic. By clicking "Accept All", you consent to our use
+                  of cookies.
+                </p>
               </div>
             </div>
 
-            <button
-              onClick={openCustomize}
-              className="text-sm text-blue-600 hover:underline mb-3 block"
-            >
-              {t("customize")}
-            </button>
-
-            <div className="flex gap-2">
+            <div className="flex flex-col sm:flex-row gap-3">
               <Button
                 variant="outline"
                 size="sm"
-                onClick={rejectAll}
-                className="flex-1 text-xs border-blue-600 text-blue-600 hover:bg-blue-50"
+                onClick={openCustomize}
+                className="flex-1 sm:flex-none rounded-lg border-blue-500 text-blue-600 hover:bg-blue-600 hover:text-white hover:border-blue-600 font-medium px-5 py-2.5 transition-colors duration-200"
               >
-                {t("reject_all")}
+                {t("customize")}
               </Button>
-              <Button
-                size="sm"
-                onClick={acceptAll}
-                className="flex-1 text-xs bg-blue-600 hover:bg-blue-700 text-white"
-              >
-                {t("accept_all")}
-              </Button>
+              <div className="flex gap-3 sm:ml-auto">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={rejectAll}
+                  className="flex-1 sm:flex-none rounded-lg border-red-500 text-red-600 hover:bg-red-500 hover:text-white hover:border-red-500 font-medium px-5 py-2.5 transition-colors duration-200"
+                >
+                  {t("reject_all")}
+                </Button>
+                <Button
+                  size="sm"
+                  onClick={acceptAll}
+                  className="flex-1 sm:flex-none rounded-lg bg-blue-600 hover:bg-blue-700 text-white font-medium px-5 py-2.5 shadow-lg shadow-blue-600/25"
+                >
+                  {t("accept_all")}
+                </Button>
+              </div>
             </div>
 
             {/* Powered by CookieYes */}
-            <div className="mt-3 pt-2 border-t border-gray-100 flex items-center justify-end gap-1 text-[10px] text-gray-500">
+            <div className="mt-4 pt-3 border-t border-gray-100 flex items-center justify-center gap-1.5 text-xs text-gray-500">
               <span>Powered by</span>
               <a
                 href="https://www.cookieyes.com/product/cookie-consent/?ref=cypbcyb&utm_source=cookie-banner&utm_medium=powered-by-cookieyes#"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="font-bold text-gray-700 hover:text-[#D30B5F] transition-colors"
+                className="font-semibold text-gray-700 hover:text-blue-600 transition-colors"
               >
                 CookieYes
               </a>
@@ -425,7 +440,7 @@ export function CookieConsent() {
               openCustomize();
             }
           }}
-          className={`w-14 h-14 rounded-full shadow-lg hover:shadow-xl hover:scale-110 transition-all duration-300 flex items-center justify-center ${
+          className={`w-14 h-14 rounded-full shadow-lg transition-all duration-300 flex items-center justify-center relative group hover:scale-110 hover:bg-[#a80a4a] hover:shadow-2xl ${
             showModal
               ? "bg-[#D30B5F]"
               : "bg-gradient-to-br from-[#D30B5F] to-[#FF1F7A]"
@@ -435,16 +450,16 @@ export function CookieConsent() {
           }
         >
           {showModal ? (
-            <X className="w-7 h-7 text-white transition-transform" />
+            <X className="w-7 h-7 text-white transition-transform group-hover:text-[#FFD6E8]" />
           ) : (
-            <Cookie className="w-7 h-7 text-white transition-transform" />
+            <Cookie className="w-7 h-7 text-white transition-transform group-hover:text-[#FFD6E8]" />
           )}
         </button>
         <span
-          className="absolute left-full ml-3 px-4 py-2 bg-gray-900 text-white text-xs rounded-lg shadow-lg whitespace-nowrap select-none opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto transition-opacity duration-200"
-          style={{ top: "50%", transform: "translateY(-50%)" }}
+          className="absolute left-full top-1/2 -translate-y-1/2 ml-3 px-4 py-2 bg-gray-900 text-white text-xs rounded-lg shadow-lg whitespace-pre-line select-none opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto transition-opacity duration-200 z-[120] min-w-max max-w-xs text-left"
+          style={{ whiteSpace: "pre-line" }}
         >
-          Manage Cookie Settings
+          {t("manage_settings")}
         </span>
       </div>
 
@@ -905,7 +920,7 @@ export function CookieConsent() {
                   <Button
                     variant="outline"
                     onClick={rejectAll}
-                    className="flex-1 rounded-none border-2 border-[#4C82E4] text-[#4C82E4] hover:bg-[#4C82E4] hover:text-white hover:border-[#4C82E4] text-base font-medium transition-all duration-200 py-6"
+                    className="flex-1 rounded-none border-2 border-red-500 text-red-600 hover:bg-red-500 hover:text-white hover:border-red-500 text-base font-medium transition-all duration-200 py-6"
                   >
                     {t("reject_all")}
                   </Button>
