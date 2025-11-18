@@ -16,7 +16,11 @@ const navItems = [
   { label: "Notifications & Error States", path: "/admin/notifications" },
 ];
 
-export default function AdminSidebar() {
+type AdminSidebarProps = {
+  active: string;
+};
+
+export default function AdminSidebar({ active }: AdminSidebarProps) {
   const navigate = useNavigate();
   const { logout } = useAuth();
   return (
@@ -28,7 +32,7 @@ export default function AdminSidebar() {
             <li key={item.path}>
               <button
                 className={`w-full text-left px-3 py-2 rounded transition font-medium ${
-                  window.location.pathname === item.path
+                  active === item.path
                     ? "bg-[#D30B5F] text-white"
                     : "hover:bg-[#353945] text-gray-200"
                 }`}
