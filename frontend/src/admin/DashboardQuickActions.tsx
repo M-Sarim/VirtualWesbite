@@ -1,5 +1,3 @@
-
-
 const actions = [
   { label: "Create Company", color: "bg-[#D30B5F]" },
   { label: "Upload KYC", color: "bg-[#1976d2]" },

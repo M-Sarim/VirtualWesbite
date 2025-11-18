@@ -1,9 +1,7 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import Header from "@/components/header";
-import Footer from "@/components/footer";
-import AdminDashboard from "@/components/admin-dashboard";
-import { useAuth } from "@/lib/hooks/useAuth";
+import AdminDashboard from "../admin/AdminDashboard";
+import { useAuth } from "../../lib/hooks/useAuth";
 
 export default function AdminPage() {
   const navigate = useNavigate();
@@ -21,12 +19,8 @@ export default function AdminPage() {
   }
 
   return (
-    <>
-      <Header showFlashSale={false} />
-      <div className="pt-20">
-        <AdminDashboard />
-      </div>
-      <Footer />
-    </>
+    <div className="pt-10">
+      <AdminDashboard />
+    </div>
   );
 }

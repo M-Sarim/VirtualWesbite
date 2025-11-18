@@ -1,5 +1,3 @@
-
-
 export default function DashboardKPIs() {
   // Mock data
   const kpis = [

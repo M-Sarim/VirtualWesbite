@@ -39,7 +39,17 @@ export function AuthPage({
     try {
       // Simulate login
       await new Promise((resolve) => setTimeout(resolve, 1000));
-      navigate("/dashboard");
+      if (loginEmail.trim().toLowerCase() === "admin@site.com") {
+        // Set admin user in localStorage for useAuth
+        const adminUser = { email: "admin@site.com", role: "admin" };
+        localStorage.setItem("user", JSON.stringify(adminUser));
+        navigate("/admin");
+      } else {
+        // Set normal user in localStorage for useAuth
+        const user = { email: loginEmail.trim().toLowerCase(), role: "user" };
+        localStorage.setItem("user", JSON.stringify(user));
+        navigate("/dashboard");
+      }
     } catch (err) {
       setError(err instanceof Error ? err.message : "Login failed");
     } finally {
@@ -75,7 +85,7 @@ export function AuthPage({
     try {
       // Simulate registration
       await new Promise((resolve) => setTimeout(resolve, 1000));
-      navigate("/dashboard");
+      navigate("/personal-details");
     } catch (err) {
       setError(err instanceof Error ? err.message : "Registration failed");
     } finally {

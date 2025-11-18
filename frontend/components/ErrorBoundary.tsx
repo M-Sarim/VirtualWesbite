@@ -1,4 +1,3 @@
-import React from "react";
 import { ErrorBoundary as ReactErrorBoundary } from "react-error-boundary";
 import { AlertCircle, RefreshCw } from "lucide-react";
 import { Button } from "@/components/ui/button";

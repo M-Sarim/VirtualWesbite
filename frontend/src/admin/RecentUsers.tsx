@@ -1,5 +1,3 @@
-
-
 const users = [
   { name: "Alice Smith", email: "alice@example.com", joined: "2025-11-15" },
   { name: "Bob Johnson", email: "bob@example.com", joined: "2025-11-14" },

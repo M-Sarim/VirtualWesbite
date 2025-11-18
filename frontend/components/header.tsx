@@ -160,7 +160,6 @@ export default function Header({
 
       {/* Main Header */}
       <div className="relative">
-        {/* Diagonal gray background using clip-path */}
         <div
           className="hidden lg:block absolute top-0 right-0 z-0 "
           style={{

@@ -1,5 +1,3 @@
-
-
 const alerts = [
   { type: "warning", text: "SLA breach: 1 formation delayed >4h." },
   { type: "info", text: "Companies House API maintenance scheduled for 8pm." },

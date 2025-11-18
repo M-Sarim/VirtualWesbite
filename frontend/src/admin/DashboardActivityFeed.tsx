@@ -1,5 +1,3 @@
-
-
 const activities = [
   { time: "09:12", text: "Company 'Acme Ltd' incorporated by Agent Sarah." },
   { time: "09:30", text: "KYC approved for client John Doe." },
