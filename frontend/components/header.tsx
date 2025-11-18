@@ -232,7 +232,7 @@ export default function Header({
               <Button
                 size="sm"
                 asChild
-                className="flex-shrink-0 border-2 border-[#02C9AA] hover:bg-[#404040] hover:text-white hover:border-transparent focus:ring-2 focus:ring-[#02C9AA]"
+                className="flex-shrink-0 border-4 border-[#02C9AA] hover:bg-[#404040] hover:text-white hover:border-transparent focus:ring-2 focus:ring-[#02C9AA]"
               >
                 <Link to="/#pricing">View Packages</Link>
               </Button>
