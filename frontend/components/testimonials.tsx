@@ -127,24 +127,7 @@ export default function Testimonials() {
           ))}
         </div>
 
-        {/* Bottom CTA */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.4 }}
-          className="text-center mt-12 sm:mt-16 px-4"
-        >
-          <p className="text-gray-600 mb-3 sm:mb-4 text-sm sm:text-base">
-            Join hundreds of satisfied clients
-          </p>
-          <a
-            href="#contact"
-            className="inline-block px-6 sm:px-8 py-2.5 sm:py-3 bg-gradient-to-r from-[#D30B5F] to-[#FF1F7A] text-white font-semibold rounded-lg hover:shadow-lg hover:shadow-[#D30B5F]/30 transition-all duration-300 text-sm sm:text-base"
-          >
-            Get Started Today
-          </a>
-        </motion.div>
+        {/* No bottom CTA here; section ends after testimonials grid */}
       </div>
     </section>
   );

@@ -93,7 +93,7 @@ export default function Footer() {
               </li>
               <li>
                 <Link
-                  to="/"
+                  to="/privacy-policy"
                   className="hover:text-[#D30B5F] transition-colors inline-block"
                 >
                   Privacy Policy
@@ -101,7 +101,7 @@ export default function Footer() {
               </li>
               <li>
                 <Link
-                  to="/"
+                  to="/terms-and-conditions"
                   className="hover:text-[#D30B5F] transition-colors inline-block"
                 >
                   Terms & Conditions
@@ -166,13 +166,13 @@ export default function Footer() {
             </p>
             <div className="flex flex-wrap gap-4 sm:gap-6 items-center justify-center">
               <Link
-                to="/"
+                to="/privacy-policy"
                 className="hover:text-[#D30B5F] transition-colors whitespace-nowrap"
               >
                 Privacy
               </Link>
               <Link
-                to="/"
+                to="/terms-and-conditions"
                 className="hover:text-[#D30B5F] transition-colors whitespace-nowrap"
               >
                 Terms

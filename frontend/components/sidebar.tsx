@@ -32,6 +32,11 @@ const mainNavItems: NavItem[] = [
     icon: Home,
   },
   {
+    title: "Identity Verification",
+    href: "/dashboard/identity-verification",
+    icon: Shield,
+  },
+  {
     title: "Virtual Address",
     href: "/dashboard/virtual-address",
     icon: MapPin,

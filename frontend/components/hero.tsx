@@ -3,7 +3,8 @@ import { Button } from "@/components/ui/button";
 import { Search } from "lucide-react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import buildingImage from "@/src/images/building.png";
+
+import mainPageImage from "@/src/images/main-page.jpeg";
 
 export default function Hero() {
   const [searchTerm, setSearchTerm] = useState("");
@@ -23,6 +24,20 @@ export default function Hero() {
       id="home"
       className="relative min-h-screen overflow-hidden pt-[140px] sm:pt-[160px] lg:pt-[180px] w-full"
     >
+      {/* Full-width background image */}
+      <div
+        className="absolute inset-0 w-full h-full z-0"
+        style={{
+          backgroundImage: `url(${mainPageImage})`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          backgroundRepeat: "no-repeat",
+        }}
+        aria-hidden="true"
+      >
+        {/* Overlay: soft, semi-transparent dark blue/gray */}
+        <div className="absolute inset-0 bg-[#1a2236]/40" />
+      </div>
       {/* Main Content Container */}
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 sm:pt-20 lg:pt-24 pb-12 sm:pb-16 lg:pb-20 w-full">
         <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center w-full">
@@ -35,18 +50,17 @@ export default function Hero() {
           >
             {/* Main Heading */}
             <div className="space-y-3 sm:space-y-4 w-full">
-              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold leading-tight text-gray-900">
-                Company Formation
+              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold leading-tight text-white">
+                Register Your
                 <br />
-                Made Effortless
+                Limited Company with Ease
                 <br />
                 <span className="text-[#FF7900]">From £2.48</span>
               </h1>
 
-              <p className="text-base sm:text-lg text-gray-700 leading-relaxed max-w-xl">
-                Set up a Limited Company with the UK's leading award-winning
-                company registration expert. It's quick and easy. Our team does
-                it all.
+              <p className="text-base sm:text-lg text-white leading-relaxed max-w-xl">
+                Set up a Limited Company with the UK's company registration
+                expert. It's quick and easy. Our team does it all.
               </p>
             </div>
 
@@ -65,8 +79,9 @@ export default function Hero() {
                   type="text"
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  placeholder="Search a Company"
-                  className="flex-1 px-3 sm:px-4 py-2 sm:py-3 bg-transparent border-none outline-none focus:outline-none focus:ring-0 text-sm sm:text-base text-gray-700 placeholder-gray-400 min-w-0"
+                  placeholder="Search Company Name"
+                  className="flex-1 px-3 sm:px-4 py-2 sm:py-3 bg-transparent rounded-l-md focus:outline-none focus:ring-0 text-sm sm:text-base text-gray-700 placeholder-gray-400 min-w-0 border-none shadow-none"
+                  style={{ border: "none", boxShadow: "none" }}
                   disabled={searchLoading}
                 />
                 <Button
@@ -96,7 +111,7 @@ export default function Hero() {
               className="space-y-4"
             >
               {/* Company Info Text */}
-              <p className="text-sm text-gray-600 leading-relaxed">
+              <p className="text-sm text-white leading-relaxed">
                 Companies open a bank account faster or equal chance of knowing
                 partners. Choose a product banking partner during the process.
                 Get up to £75K Cash Back.
@@ -104,28 +119,8 @@ export default function Hero() {
             </motion.div>
           </motion.div>
 
-          {/* Right Side - Building Image with Badge */}
-          <motion.div
-            initial={{ opacity: 0, x: 50 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8, delay: 0.3 }}
-            className="relative hidden lg:block w-full"
-          >
-            {/* Building Image */}
-            <div className="relative rounded-3xl overflow-hidden shadow-2xl w-full">
-              <img
-                src={buildingImage}
-                alt="UK Business Building"
-                className="w-full h-[400px] lg:h-[500px] xl:h-[600px] object-cover"
-              />
-
-              {/* Overlay Gradient */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
-
-              {/* Today's Stats Badge */}
-              {/* ...removed Today's Stats Badge... */}
-            </div>
-          </motion.div>
+          {/* Right Side - Empty for now, background is now global for this section */}
+          <div className="hidden lg:block" />
         </div>
 
         {/* Bottom Feature Cards removed as requested */}
