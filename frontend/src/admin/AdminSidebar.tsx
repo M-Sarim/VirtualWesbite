@@ -1,4 +1,4 @@
-import React from "react";
+
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../lib/hooks/useAuth";
 import { FiLogOut } from "react-icons/fi";
@@ -17,7 +17,7 @@ const navItems = [
   { label: "Notifications & Error States", path: "/admin/notifications" },
 ];
 
-export default function AdminSidebar({ active }: { active: string }) {
+export default function AdminSidebar() {
   const navigate = useNavigate();
   const { logout } = useAuth();
   return (

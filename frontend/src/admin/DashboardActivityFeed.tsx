@@ -1,4 +1,4 @@
-import React from "react";
+
 
 const activities = [
   { time: "09:12", text: "Company 'Acme Ltd' incorporated by Agent Sarah." },

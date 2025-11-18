@@ -1,4 +1,4 @@
-import React from "react";
+
 
 const actions = [
   { label: "Create Company", color: "bg-[#D30B5F]" },
