@@ -1,3 +1,4 @@
+import React from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../lib/hooks/useAuth";
 import { FiLogOut } from "react-icons/fi";
@@ -44,7 +45,7 @@ export default function AdminSidebar() {
             onClick={logout}
             className="flex items-center gap-2 w-full px-3 py-2 rounded bg-red-600 hover:bg-red-700 text-white font-semibold transition"
           >
-            <FiLogOut />
+            <FiLogOut size={20} />
             Logout
           </button>
         </div>
