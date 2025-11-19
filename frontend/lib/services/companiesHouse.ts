@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const BASE_URL = "/api/companies-house";
+const BASE_URL = import.meta.env.VITE_DEPLOYED_API_URL || "/api/companies-house";
 export interface CompanySearchResult {
   title: string;
   company_number: string;
