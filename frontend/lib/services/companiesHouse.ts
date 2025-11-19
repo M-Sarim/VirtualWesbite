@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const BASE_URL = "https://virtual-wesbite.vercel.app/api/companies-house";
+const BASE_URL = "/api/companies-house";
 export interface CompanySearchResult {
   title: string;
   company_number: string;
