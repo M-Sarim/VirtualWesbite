@@ -1,6 +1,6 @@
 require("dotenv").config();
 const express = require("express");
-const fetch = require("node-fetch");
+const axios = require("axios");
 const cors = require("cors");
 const bodyParser = require("body-parser");
 
@@ -37,20 +37,12 @@ app.get("/api/companies-house", async (req, res) => {
     console.log("[Companies House Proxy] Using API Key:", apiKey);
     console.log("[Companies House Proxy] Authorization Header:", authHeader);
     console.log("[Companies House Proxy] Request URL:", url);
-    const response = await fetch(url, {
+    const response = await axios.get(url, {
       headers: {
         Authorization: authHeader,
       },
     });
-    if (!response.ok) {
-      const errorText = await response.text();
-      console.error("[Companies House Proxy] Error Response:", errorText);
-      return res.status(response.status).json({
-        error: "Failed to fetch from Companies House",
-        details: errorText,
-      });
-    }
-    const data = await response.json();
+    const data = response.data;
     res.json(data);
   } catch (err) {
     console.error("[Companies House Proxy] Exception:", err);
