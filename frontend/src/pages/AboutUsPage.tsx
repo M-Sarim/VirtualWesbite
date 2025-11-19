@@ -1,11 +1,10 @@
-import React from "react";
 import Header from "@/components/header";
 import { Button } from "@/components/ui/button";
 import Footer from "@/components/footer";
 import companyHouseMainOffice from "@/src/images/company-house-office.jpeg";
-import callCenterWoman from "@/src/images/young-woman-working-call-center-office-with-headphones.png";
+import callCenterWoman from "@/src/images/support representative on a call.png";
 import officeTeam from "@/src/images/office team.jpeg";
-import clientDealing from "@/src/images/client dealing.jpeg";
+import clientDealing from "@/src/images/support agent dealing with a client.jpeg";
 import aboutUsBg from "@/src/images/background image.jpg";
 
 const AboutUsPage: React.FC = () => {
