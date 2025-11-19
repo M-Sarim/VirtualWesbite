@@ -1,5 +1,6 @@
-const BASE_URL = "/api/companies-house";
+import axios from "axios";
 
+const BASE_URL = "/api/companies-house";
 export interface CompanySearchResult {
   title: string;
   company_number: string;
@@ -15,12 +16,8 @@ export async function searchCompanies(
 ): Promise<CompanySearchResult[]> {
   const url = `${BASE_URL}?q=${encodeURIComponent(query)}`;
   try {
-    const response = await fetch(url);
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
-    const data = await response.json();
-    // The backend returns the JSON from Companies House API
+    const response = await axios.get(url);
+    const data = response.data;
     return data.items || [];
   } catch (error) {
     console.error("Search failed:", error);
