@@ -26,6 +26,10 @@ exports.handler = async (event) => {
 
     return {
       statusCode: 200,
+      headers: {
+        "Access-Control-Allow-Origin": "*", // Replace '*' with your frontend domain for better security
+        "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
+      },
       body: JSON.stringify(response.data),
     };
   } catch (err) {
